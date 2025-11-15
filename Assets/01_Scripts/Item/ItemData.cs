@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public enum ItemType
 {
     Equipable,
     Consumable,
-    ReSource
+    Resource
 }
 
 public enum ConsumableType
