@@ -227,7 +227,17 @@ public class UIInventory : MonoBehaviour
 
     public bool HasItem(ItemData item, int quantity)
     {
-        return false;
+        int total = 0;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].item == item)
+            {
+                total += slots[i].quantity;
+            }
+        }
+
+        return total >= quantity;
     }
 
     public void OnEquipbutton()

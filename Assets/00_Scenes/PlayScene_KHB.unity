@@ -6698,8 +6698,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   previewMaterial: {fileID: 2100000, guid: 9dfabadf26dc47b43bc35a65af9071b6, type: 2}
-  validColor: {r: 0, g: 1, b: 0, a: 1}
-  invalidColor: {r: 1, g: 0, b: 0, a: 1}
+  validColor: {r: 0, g: 0.116647005, b: 1, a: 0.47058824}
+  invalidColor: {r: 1, g: 0, b: 0, a: 0.47058824}
   objectDistanceFromPlayer: 3
   raycastStartVerticalOffset: 5
   raycastDistance: 10

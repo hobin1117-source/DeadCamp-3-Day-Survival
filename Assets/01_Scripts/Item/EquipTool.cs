@@ -15,7 +15,6 @@ public class EquipTool : Equip
 
     private Animator animator;
     private Camera camera;
-    public float useStamina;
     private void Start()
     {
         camera = Camera.main;
@@ -29,7 +28,7 @@ public class EquipTool : Equip
             attacking = true;
             animator.SetTrigger("Attack");
             Invoke("OnCanAttack", attackRate);
-            if (CharacterManager.Instance.Player.condition.UseStamina(useStamina))
+            if (CharacterManager.Instance.Player.condition)
             {
                 attacking = true;
                 animator.SetTrigger("Attack");

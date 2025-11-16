@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector]
     public Action inventory;
+    public Action builder;
     private Rigidbody _rigidbody;
 
     private void Awake()
@@ -116,6 +117,16 @@ public class PlayerController : MonoBehaviour
             ToggleCursor();
         }
     }
+
+    public void OnBuilderButton(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.phase == InputActionPhase.Started)
+        {
+            builder?.Invoke();
+            ToggleCursor();
+        }
+    }
+
     void ToggleCursor()
     {
         bool toggle = Cursor.lockState == CursorLockMode.Locked;

@@ -12,8 +12,8 @@ public class ObjectPlacer : MonoBehaviour
 
     [Header("Preview Material")]
     [SerializeField] private Material previewMaterial;           // 미리보기용 머티리얼
-    [SerializeField] private Color validColor = Color.green;     // 배치 가능 색
-    [SerializeField] private Color invalidColor = Color.red;     // 배치 불가 색
+    [SerializeField] private Color validColor;     // 배치 가능 색
+    [SerializeField] private Color invalidColor;     // 배치 불가 색
 
     [Header("Raycast Parameters")]
     [SerializeField] private float objectDistanceFromPlayer = 3f;    // 카메라 앞 거리
