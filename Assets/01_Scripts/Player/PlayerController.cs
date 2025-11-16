@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector]
     public Action inventory;
+    public Action builder;
     private Rigidbody _rigidbody;
 
     private void Awake()
@@ -47,7 +48,6 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
         dir *= moveSpeed;
         dir.y = _rigidbody.velocity.y;
@@ -94,7 +94,6 @@ public class PlayerController : MonoBehaviour
     {
         Ray[] rays = new Ray[4]
         {
-
             new Ray(transform.position + (transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
             new Ray(transform.position + (-transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
             new Ray(transform.position + (transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down),
@@ -103,8 +102,7 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < rays.Length; i++)
         {
-            Debug.DrawRay(rays[i].origin, rays[i].direction * groundLayerMask, Color.black);
-            if (Physics.Raycast(rays[i], 0.1f, groundLayerMask))
+            if (Physics.Raycast(rays[i], 0.8f, groundLayerMask))
             {
                 return true;
             }
@@ -119,6 +117,16 @@ public class PlayerController : MonoBehaviour
             ToggleCursor();
         }
     }
+
+    public void OnBuilderButton(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.phase == InputActionPhase.Started)
+        {
+            builder?.Invoke();
+            ToggleCursor();
+        }
+    }
+
     void ToggleCursor()
     {
         bool toggle = Cursor.lockState == CursorLockMode.Locked;
