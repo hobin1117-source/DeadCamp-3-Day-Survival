@@ -8,7 +8,7 @@ public class ResourceSpawner : MonoBehaviour
     private Queue<GameObject> pool = new Queue<GameObject>();
 
     [SerializeField] private GameObject[] resources;
-    private List<Transform> spawnPool = new List<Transform>();
+    private List<int> spawnPool = new List<int>();
 
     [SerializeField] private int initialSize = 20;
 
@@ -34,14 +34,14 @@ public class ResourceSpawner : MonoBehaviour
     {
         for (int i = 0; i < spawnPoints.Length; i++)
         {
-            spawnPool.Add(spawnPoints[i]);
+            spawnPool.Add(i);
         }
     }
 
     public void InsertQueue(GameObject go, int index)
     {
         pool.Enqueue(go);
-        spawnPool.Add(spawnPoints[index]);
+        spawnPool.Add(index);
         go.SetActive(false);
     }
 
@@ -60,12 +60,13 @@ public class ResourceSpawner : MonoBehaviour
         {
             if (pool.Count != 0)
             {
-                int index = Random.Range(0, spawnPool.Count);
-                spawnPool.Remove(spawnPoints[index]);
+                int indexInPool = Random.Range(0, spawnPool.Count);
+                int originalSpawnIndex = spawnPool[indexInPool];
+                spawnPool.RemoveAt(indexInPool);
 
                 GameObject go = GetQueue();
-                go.transform.position = spawnPoints[index].position;
-                go.GetComponent<Resource>().spawnIndex = index;
+                go.transform.position = spawnPoints[originalSpawnIndex].position;
+                go.GetComponent<Resource>().spawnIndex = originalSpawnIndex;
 
                 if (pool.Count <= 5)
                     dealy = spawnDleay;
