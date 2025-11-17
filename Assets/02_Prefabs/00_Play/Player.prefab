@@ -502,6 +502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uICondition: {fileID: 0}
   noHungerHealthDecay: 2
+  noDrinkHealthDecay: 0
 --- !u!114 &6376724528845835533
 MonoBehaviour:
   m_ObjectHideFlags: 0
