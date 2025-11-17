@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class ResourceSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject spawnRange;
-    [SerializeField] private BoxCollider rangeCollider;
+    [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private BoxCollider spawnRange;
+    [SerializeField] private BoxCollider unSpawnRange;
     [SerializeField] private GameObject[] resources;
     private Queue<GameObject> pool = new Queue<GameObject>();
 
@@ -59,16 +60,18 @@ public class ResourceSpawner : MonoBehaviour
 
     Vector3 GetRandomPosition()
     {
-        Vector3 originPosition = spawnRange.transform.position;
-  
-        float rangeX = rangeCollider.bounds.size.x;
-        float rangeZ = rangeCollider.bounds.size.z;
+        Bounds spawnBounds = spawnRange.bounds;
+        Bounds unSpawnBounds = unSpawnRange.bounds;
 
-        rangeX = Random.Range((rangeX / 2) * -1, rangeX / 2);
-        rangeZ = Random.Range((rangeZ / 2) * -1, rangeZ / 2);
-        Vector3 RandomPostion = new Vector3(rangeX, 0f, rangeZ);
+        while (true)
+        {
+            float randomX = Random.Range(spawnBounds.min.x, spawnBounds.max.x);
+            float randomZ = Random.Range(spawnBounds.min.z, spawnBounds.max.z);
 
-        Vector3 respawnPosition = originPosition + RandomPostion;
-        return respawnPosition;
+            Vector3 respawnPosition = new Vector3(randomX, spawnBounds.center.y, randomZ);
+
+            if (!unSpawnBounds.Contains(respawnPosition))
+                return respawnPosition;
+        }
     }
 }

@@ -2388,13 +2388,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 934c346b409542249aa7b38d611ddf53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
-  builder: {fileID: 0}
-  icon: {fileID: 0}
-  nameText: {fileID: 0}
-  woodCostText: {fileID: 0}
-  button: {fileID: 0}
-  index: 0
 --- !u!1 &527761485
 GameObject:
   m_ObjectHideFlags: 0
@@ -2719,11 +2712,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81806843fc32ad14e8a5e18661d3177e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildWindow: {fileID: 572080582}
-  slotPanel: {fileID: 1965983860}
-  slots: []
-  buildables: []
-  woodItemData: {fileID: 0}
 --- !u!1 &577545183
 GameObject:
   m_ObjectHideFlags: 0
