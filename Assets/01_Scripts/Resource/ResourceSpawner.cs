@@ -1,17 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ResourceSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject spawnPoint;
-    [SerializeField] private BoxCollider spawnRange;
-    [SerializeField] private BoxCollider unSpawnRange;
-    [SerializeField] private GameObject[] resources;
+    [SerializeField] private Transform[] spawnPoints;
     private Queue<GameObject> pool = new Queue<GameObject>();
 
-    [SerializeField] private int initialSize = 30;
+    [SerializeField] private GameObject[] resources;
+    private List<Transform> spawnPool = new List<Transform>();
+
+    [SerializeField] private int initialSize = 20;
+
     [SerializeField] private float spawnDleay = 30;
 
     public void Start()
@@ -25,12 +25,23 @@ public class ResourceSpawner : MonoBehaviour
             go.SetActive(false);
         }
 
+        InitSpawnPool();
+
         StartCoroutine(Respawn());
     }
 
-    public void InsertQueue(GameObject go)
+    private void InitSpawnPool()
+    {
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            spawnPool.Add(spawnPoints[i]);
+        }
+    }
+
+    public void InsertQueue(GameObject go, int index)
     {
         pool.Enqueue(go);
+        spawnPool.Add(spawnPoints[index]);
         go.SetActive(false);
     }
 
@@ -49,29 +60,19 @@ public class ResourceSpawner : MonoBehaviour
         {
             if (pool.Count != 0)
             {
+                int index = Random.Range(0, spawnPool.Count);
+                spawnPool.Remove(spawnPoints[index]);
+
                 GameObject go = GetQueue();
-                go.transform.position = GetRandomPosition();
+                go.transform.position = spawnPoints[index].position;
+                go.GetComponent<Resource>().spawnIndex = index;
+
                 if (pool.Count <= 5)
                     dealy = spawnDleay;
+                else
+                    dealy = 0.01f;
             }
             yield return new WaitForSeconds(dealy);
-        }
-    }
-
-    Vector3 GetRandomPosition()
-    {
-        Bounds spawnBounds = spawnRange.bounds;
-        Bounds unSpawnBounds = unSpawnRange.bounds;
-
-        while (true)
-        {
-            float randomX = Random.Range(spawnBounds.min.x, spawnBounds.max.x);
-            float randomZ = Random.Range(spawnBounds.min.z, spawnBounds.max.z);
-
-            Vector3 respawnPosition = new Vector3(randomX, 3f, randomZ);
-
-            if (!unSpawnBounds.Contains(respawnPosition))
-                return respawnPosition;
         }
     }
 }

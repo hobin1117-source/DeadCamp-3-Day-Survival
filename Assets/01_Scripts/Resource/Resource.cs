@@ -6,6 +6,8 @@ public class Resource : MonoBehaviour
     public int quantityPerHit = 1;
     public int capacity;
 
+    public int spawnIndex;
+
     private ResourceSpawner resourceSpawner;
 
     private void Start()
@@ -29,6 +31,6 @@ public class Resource : MonoBehaviour
 
     private void Release()
     {
-        resourceSpawner.InsertQueue(gameObject);
+        resourceSpawner.InsertQueue(gameObject, spawnIndex);
     }
 }
