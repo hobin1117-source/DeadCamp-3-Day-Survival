@@ -10,21 +10,20 @@ public class Resource : MonoBehaviour
 
     private void Start()
     {
-        resourceSpawner = Managers.Resource;
+        resourceSpawner = FindAnyObjectByType<ResourceSpawner>();
     }
 
     public void Gathering(Vector3 hitPoint, Vector3 hitNormal)
     {
         for (int i = 0; i < quantityPerHit; i++)
         {
+            capacity -= 1;
+            Instantiate(itemToGive.dropPrefabs, hitPoint + Vector3.up, Quaternion.LookRotation(hitNormal, Vector3.up));
             if (capacity <= 0)
             {
                 Release();
                 break;
             }
-            capacity -= 1;
-            Instantiate(itemToGive.dropPrefabs, hitPoint + Vector3.up, Quaternion.LookRotation(hitNormal, Vector3.up));
-
         }
     }
 
