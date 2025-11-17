@@ -1997,16 +1997,16 @@ MonoBehaviour:
   walkSpeed: 1
   runSpeed: 3
   dropOnDeath: []
-  detectDistance: 5
+  detectDistance: 20
   minWanderDistance: 5
   maxWanderDistance: 10
   minWanderWaitTime: 1
   maxWanderWaitTime: 5
-  damage: 0
-  attackRate: 0
-  lastAttackTime: 0
-  attackDistance: 0
-  fieldOfView: 60
+  damage: 5
+  attackRate: 2
+  lastAttackTime: 2
+  attackDistance: 2
+  fieldOfView: 80
 --- !u!65 &8438304884589020967
 BoxCollider:
   m_ObjectHideFlags: 0

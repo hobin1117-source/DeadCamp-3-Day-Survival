@@ -143,7 +143,6 @@ public class Monster : MonoBehaviour, IDamagable
             if (Time.time - lastAttackTime > attackRate)
             {
                 lastAttackTime = Time.time;
-                CharacterManager.Instance.Player.controller.GetComponent<IDamagable>().TakePhysicalDamage(damage);
                 animator.speed = 1;
                 animator.SetTrigger("Attack");
             }
@@ -152,7 +151,7 @@ public class Monster : MonoBehaviour, IDamagable
         {
             if (playerDistance < detectDistance)
             {
-                agent.isStopped = false;
+                //agent.isStopped = false;
                 NavMeshPath path = new NavMeshPath();
 
                 if (agent.CalculatePath(CharacterManager.Instance.Player.transform.position, path))
@@ -221,5 +220,17 @@ public class Monster : MonoBehaviour, IDamagable
     public void DestroySelf()
     {
         Destroy(gameObject);
+    }
+
+    public void ApplyAttackDamage()
+    {
+        CharacterManager.Instance.Player.controller
+            .GetComponent<IDamagable>()
+            .TakePhysicalDamage(damage);
+    }
+
+    public void StopMoving()
+    {
+        agent.isStopped = false;
     }
 }
