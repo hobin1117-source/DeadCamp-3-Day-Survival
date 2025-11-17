@@ -217,7 +217,7 @@ Transform:
   m_GameObject: {fileID: 958757095041390108}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: -5.3218435e-10}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1164,7 +1164,7 @@ GameObject:
   - component: {fileID: 6442184458774354411}
   - component: {fileID: 1118881133962216337}
   m_Layer: 0
-  m_Name: Zombie_Pacient(2)
+  m_Name: Zombie_Pacient
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
