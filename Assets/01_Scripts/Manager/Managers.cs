@@ -31,15 +31,8 @@ public class Managers : MonoBehaviour
         }
     }
 
-    // 인스펙터 할당
-    [SerializeField] private ResourceSpawner resource;
-    
-    // 외부 접근
-    public static ResourceSpawner Resource { get; private set; }
-
-    // 참조 연결
     private void Init()
     {
-        Resource = resource;
+        
     }
 }
