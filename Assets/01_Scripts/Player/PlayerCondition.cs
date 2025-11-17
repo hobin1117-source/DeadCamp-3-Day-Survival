@@ -52,7 +52,7 @@ public class PlayerCondition : MonoBehaviour, IDamagable
 
     public void Drink(float amout)
     {
-        hunger.Add(amout);
+        dirsty.Add(amout);
     }
 
     public void Die()
