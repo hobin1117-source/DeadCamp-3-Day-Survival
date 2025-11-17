@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 32497905456716870}
   - component: {fileID: 5402212725224097208}
-  - component: {fileID: 7160186858020498179}
+  - component: {fileID: -641456972861200726}
   m_Layer: 0
   m_Name: Resource_AppleTree
   m_TagString: Untagged
@@ -138,7 +138,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7160186858020498179
+--- !u!114 &-641456972861200726
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,9 +147,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7066928386742441512}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dfd9c29d1ab0c44ab54b04fa6ac796c, type: 3}
+  m_Script: {fileID: 11500000, guid: c584fcd250734704eb898f10bcc1fee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemToGive: {fileID: 11400000, guid: 5d689119108e5484daba96241ede7e66, type: 2}
   quantityPerHit: 1
-  capacity: 5
+  capacity: 3
