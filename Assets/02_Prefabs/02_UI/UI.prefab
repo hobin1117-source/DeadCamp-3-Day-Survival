@@ -840,7 +840,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: bfc59c4beafda764280ff49c1394c3f9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1730,7 +1730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 16981647624394352}
   hunger: {fileID: 6939103093937549900}
-  stamina: {fileID: 5787392742501150357}
+  dirsty: {fileID: 0}
 --- !u!1 &5593104799030064880
 GameObject:
   m_ObjectHideFlags: 0
