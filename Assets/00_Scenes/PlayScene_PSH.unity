@@ -9465,6 +9465,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4702229198241056, guid: 0ba258545da721e488ecb71ffd143b6f, type: 3}
   m_PrefabInstance: {fileID: 1948866325}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1958178701
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1637446545028203773, guid: 6b1f502df4091d44bbbb25e14ddbb81d, type: 3}
+      propertyPath: m_Name
+      value: Managers
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667643331559631237, guid: 6b1f502df4091d44bbbb25e14ddbb81d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667643331559631237, guid: 6b1f502df4091d44bbbb25e14ddbb81d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667643331559631237, guid: 6b1f502df4091d44bbbb25e14ddbb81d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667643331559631237, guid: 6b1f502df4091d44bbbb25e14ddbb81d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667643331559631237, guid: 6b1f502df4091d44bbbb25e14ddbb81d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667643331559631237, guid: 6b1f502df4091d44bbbb25e14ddbb81d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667643331559631237, guid: 6b1f502df4091d44bbbb25e14ddbb81d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667643331559631237, guid: 6b1f502df4091d44bbbb25e14ddbb81d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667643331559631237, guid: 6b1f502df4091d44bbbb25e14ddbb81d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667643331559631237, guid: 6b1f502df4091d44bbbb25e14ddbb81d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6b1f502df4091d44bbbb25e14ddbb81d, type: 3}
 --- !u!1 &1965983859
 GameObject:
   m_ObjectHideFlags: 0
@@ -10601,6 +10658,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rocks
       objectReference: {fileID: 0}
+    - target: {fileID: 6028125760754161235, guid: 59b488a593254a34fb3944abb7b0806c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6743366615043922653, guid: 59b488a593254a34fb3944abb7b0806c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10808,9 +10869,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1729201666050762316, guid: 93cfd9cecfbc8f64198aa89e7f360d8a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310372348084269739, guid: 93cfd9cecfbc8f64198aa89e7f360d8a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4221214530192562487, guid: 93cfd9cecfbc8f64198aa89e7f360d8a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7503420162989215905, guid: 93cfd9cecfbc8f64198aa89e7f360d8a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7853787052529037045, guid: 93cfd9cecfbc8f64198aa89e7f360d8a, type: 3}
       propertyPath: m_Name
       value: Vegetation
+      objectReference: {fileID: 0}
+    - target: {fileID: 7853787052529037045, guid: 93cfd9cecfbc8f64198aa89e7f360d8a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8070752243123636405, guid: 93cfd9cecfbc8f64198aa89e7f360d8a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12952,3 +13033,4 @@ SceneRoots:
   - {fileID: 80059908}
   - {fileID: 39484103}
   - {fileID: 258395398}
+  - {fileID: 1958178701}
