@@ -6564,7 +6564,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2662358212687336911, guid: ecdae200a15a0484fb5269b37391b6ef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 20.5
       objectReference: {fileID: 0}
     - target: {fileID: 2662358212687336911, guid: ecdae200a15a0484fb5269b37391b6ef, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6572,7 +6572,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2662358212687336911, guid: ecdae200a15a0484fb5269b37391b6ef, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 64.3
       objectReference: {fileID: 0}
     - target: {fileID: 2662358212687336911, guid: ecdae200a15a0484fb5269b37391b6ef, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6601,6 +6601,10 @@ PrefabInstance:
     - target: {fileID: 2662358212687336911, guid: ecdae200a15a0484fb5269b37391b6ef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4573278253670384278, guid: ecdae200a15a0484fb5269b37391b6ef, type: 3}
+      propertyPath: noDrinkHealthDecay
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6376724528845835533, guid: ecdae200a15a0484fb5269b37391b6ef, type: 3}
       propertyPath: promptText
@@ -9735,9 +9739,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lake
       objectReference: {fileID: 0}
-    - target: {fileID: 2579133521087817076, guid: cfc83511492fd23469ef5ec3776a5256, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 3434795768635664827, guid: cfc83511492fd23469ef5ec3776a5256, type: 3}
+      propertyPath: prompt
+      value: 'Lake, You can drink water
+
+        Press [E] to drink'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
