@@ -68,7 +68,7 @@ public class ResourceSpawner : MonoBehaviour
             float randomX = Random.Range(spawnBounds.min.x, spawnBounds.max.x);
             float randomZ = Random.Range(spawnBounds.min.z, spawnBounds.max.z);
 
-            Vector3 respawnPosition = new Vector3(randomX, spawnBounds.center.y, randomZ);
+            Vector3 respawnPosition = new Vector3(randomX, 3f, randomZ);
 
             if (!unSpawnBounds.Contains(respawnPosition))
                 return respawnPosition;
