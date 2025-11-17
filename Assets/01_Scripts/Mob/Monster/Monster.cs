@@ -41,6 +41,8 @@ public class Monster : MonoBehaviour, IDamagable
     private Animator animator;
     private SkinnedMeshRenderer[] meshRenderers;
 
+    public event System.Action OnDeath;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -48,6 +50,10 @@ public class Monster : MonoBehaviour, IDamagable
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
 
+    void Start()
+    {
+        SetState(AIState.Wandering);
+    }
 
     void Update()
     {
@@ -59,10 +65,10 @@ public class Monster : MonoBehaviour, IDamagable
         {
             case AIState.Idel:
             case AIState.Wandering:
-                //플레이어 탐색
+                PassiveUpdate();
                 break;
             case AIState.Attacking:
-                //플레이어 공격 함수
+                AttackingUpdate();
                 break;
         }
     }
@@ -75,6 +81,8 @@ public class Monster : MonoBehaviour, IDamagable
             case AIState.Idel:
                 agent.speed = walkSpeed;
                 agent.isStopped = true;
+
+                animator.SetFloat("IdleType", Random.value < 0.5f ? 0f : 1f);
                 break;
 
             case AIState.Attacking:
@@ -98,7 +106,7 @@ public class Monster : MonoBehaviour, IDamagable
             SetState(AIState.Idel);
             Invoke("WanderToNewLocation", Random.Range(minWanderWaitTime, maxWanderWaitTime));
         }
-        if (playerDistance < detectDistance)
+        if (playerDistance < detectDistance && IsPlayerInFieldOfView())
         {
             SetState(AIState.Attacking);
         }
@@ -194,6 +202,7 @@ public class Monster : MonoBehaviour, IDamagable
         agent.isStopped = true; //네브메쉬를 꺼놓음으로써 죽어도 플레이어를 따라가는 것을 방지함
 
         GetComponent<Collider>().enabled = false;
+        OnDeath?.Invoke();
     }
 
     IEnumerator DamageFlash()
