@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using TreeEditor;
+using System.Data.Common;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,7 +10,7 @@ public enum AIState
     Attacking
 }
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, IDamagable
 {
     [Header("stats")]
     public int health;
@@ -23,7 +21,7 @@ public class Monster : MonoBehaviour
     [Header("AI")]
     private NavMeshAgent agent;
     public float detectDistance;
-    private AIState aIState;
+    private AIState aiState;
 
     [Header("Wandering")]
     public float minWanderDistance;
@@ -38,7 +36,7 @@ public class Monster : MonoBehaviour
     public float lastAttackTime;
     public float attackDistance;
 
-    public float playerDistance;
+    private float playerDistance;
     public float fieldOfView = 100f;
     private Animator animator;
     private SkinnedMeshRenderer[] meshRenderers;
@@ -54,5 +52,165 @@ public class Monster : MonoBehaviour
     void Update()
     {
         playerDistance = Vector3.Distance(transform.position, CharacterManager.Instance.Player.transform.position);
+
+        animator.SetBool("Moving", aiState != AIState.Idel);
+
+        switch (aiState)
+        {
+            case AIState.Idel:
+            case AIState.Wandering:
+                //플레이어 탐색
+                break;
+            case AIState.Attacking:
+                //플레이어 공격 함수
+                break;
+        }
+    }
+
+    private void SetState(AIState state)
+    {
+        aiState = state;
+        switch (aiState)
+        {
+            case AIState.Idel:
+                agent.speed = walkSpeed;
+                agent.isStopped = true;
+                break;
+
+            case AIState.Attacking:
+                agent.speed = runSpeed;
+                agent.isStopped = false;
+                break;
+
+            case AIState.Wandering:
+                agent.speed = walkSpeed;
+                agent.isStopped = false;
+                break;
+        }
+
+        animator.speed = agent.speed / walkSpeed;
+    }
+
+    void PassiveUpdate()//평소에 돌아다니거나 배회하는 상태
+    {
+        if (aiState == AIState.Wandering && agent.remainingDistance < 0.1f)
+        {
+            SetState(AIState.Idel);
+            Invoke("WanderToNewLocation", Random.Range(minWanderWaitTime, maxWanderWaitTime));
+        }
+        if (playerDistance < detectDistance)
+        {
+            SetState(AIState.Attacking);
+        }
+    }
+
+    void WanderToNewLocation()
+    {
+        if (aiState != AIState.Idel) return;
+
+        SetState(AIState.Wandering);
+        agent.SetDestination(GetWanderLoction());
+    }
+
+    Vector3 GetWanderLoction()
+    {
+        NavMeshHit hit;
+
+        NavMesh.SamplePosition(transform.position + (Random.onUnitSphere * Random.Range(minWanderDistance, maxWanderDistance)), out hit, maxWanderDistance, NavMesh.AllAreas);
+        int i = 0;
+        while (Vector3.Distance(transform.position, hit.position) < detectDistance)
+        {
+            NavMesh.SamplePosition(transform.position + (Random.onUnitSphere * Random.Range(minWanderDistance, maxWanderDistance)), out hit, maxWanderDistance, NavMesh.AllAreas);
+            i++;
+            if (i == 30) break;
+        }
+        return hit.position;
+    }
+
+    void AttackingUpdate()
+    {
+        if (playerDistance < attackDistance && IsPlayerInFieldOfView())
+        {
+            agent.isStopped = true;
+            if (Time.time - lastAttackTime > attackRate)
+            {
+                lastAttackTime = Time.time;
+                CharacterManager.Instance.Player.controller.GetComponent<IDamagable>().TakePhysicalDamage(damage);
+                animator.speed = 1;
+                animator.SetTrigger("Attack");
+            }
+        }
+        else
+        {
+            if (playerDistance < detectDistance)
+            {
+                agent.isStopped = false;
+                NavMeshPath path = new NavMeshPath();
+
+                if (agent.CalculatePath(CharacterManager.Instance.Player.transform.position, path))
+                {
+                    agent.SetDestination(CharacterManager.Instance.Player.transform.position);
+                }
+                else
+                {
+                    agent.SetDestination(transform.position);
+                    agent.isStopped = true;
+                    SetState(AIState.Wandering);
+                }
+            }
+            else
+            {
+                agent.SetDestination(transform.position);
+                agent.isStopped = true;
+                SetState(AIState.Wandering);
+            }
+        }
+    }
+    bool IsPlayerInFieldOfView()
+    {
+        Vector3 directionToPlayer = CharacterManager.Instance.Player.transform.position - transform.position;
+        float angle = Vector3.Angle(transform.forward, directionToPlayer);
+        return angle < fieldOfView * 0.5f;
+    }
+
+    public void TakePhysicalDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        for (int i = 0; i < dropOnDeath.Length; i++)
+        {
+            //드랍 아이템 설정
+        }
+
+        animator.SetBool("Death", true);
+
+        agent.isStopped = true; //네브메쉬를 꺼놓음으로써 죽어도 플레이어를 따라가는 것을 방지함
+
+        GetComponent<Collider>().enabled = false;
+    }
+
+    IEnumerator DamageFlash()
+    {
+        for (int i = 0; i < meshRenderers.Length; i++)
+        {
+            meshRenderers[i].material.color = new Color(1.0f, 0.6f, 0.6f);
+        }
+        yield return new WaitForSeconds(0.1f);
+        for (int i = 0; i < meshRenderers.Length; i++)
+        {
+            meshRenderers[i].material.color = Color.white;
+        }
+    }
+
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 }
