@@ -273,17 +273,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 78946870933360238, guid: 378fbe4fbe8f91c45b69dde4d1d29aa6, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 725608175907491115, guid: 378fbe4fbe8f91c45b69dde4d1d29aa6, type: 3}
       propertyPath: m_Name
       value: Item_Axe
-      objectReference: {fileID: 0}
-    - target: {fileID: 725608175907491115, guid: 378fbe4fbe8f91c45b69dde4d1d29aa6, type: 3}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1376568921360430349, guid: 378fbe4fbe8f91c45b69dde4d1d29aa6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1451,49 +1443,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 91671387032534269, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 207477630881500888, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 493185246059332757, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 1123518830994095814, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_Name
       value: Item_Rifle
-      objectReference: {fileID: 0}
-    - target: {fileID: 1123518830994095814, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1312048108617951207, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1584100480370815556, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1906877418239200702, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4904595305032757845, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5526019938282392442, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7105605009951340628, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8549333914251562236, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1505,7 +1457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8549333914251562236, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 4.82
       objectReference: {fileID: 0}
     - target: {fileID: 8549333914251562236, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9735,9 +9687,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lake
       objectReference: {fileID: 0}
-    - target: {fileID: 2579133521087817076, guid: cfc83511492fd23469ef5ec3776a5256, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 3434795768635664827, guid: cfc83511492fd23469ef5ec3776a5256, type: 3}
+      propertyPath: prompt
+      value: 'Lake, You can drink water
+
+        Press [E] to drink'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10332,6 +10286,10 @@ PrefabInstance:
     - target: {fileID: 6071128072507256798, guid: 8c7d10f8352b7fe4b970efe4bf1aadd6, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6071128072507256798, guid: 8c7d10f8352b7fe4b970efe4bf1aadd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6156262590079345167, guid: 8c7d10f8352b7fe4b970efe4bf1aadd6, type: 3}
       propertyPath: m_IsActive

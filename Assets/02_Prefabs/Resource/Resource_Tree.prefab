@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5953782710922602011}
   - component: {fileID: 2647187107297750923}
   - component: {fileID: 4802340120198620948}
-  - component: {fileID: 8818904940622231073}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -84,18 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8818904940622231073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7868194819052742786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58229b35c6c779d40842f594b619ccba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8274020690953598801
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4056095315441426638}
   - component: {fileID: 8031287389705211924}
-  - component: {fileID: 4142964847772341797}
+  - component: {fileID: 5914450184792104024}
   m_Layer: 0
   m_Name: Resource_Tree
   m_TagString: Untagged
@@ -151,7 +138,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4142964847772341797
+--- !u!114 &5914450184792104024
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,7 +147,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8274020690953598801}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dfd9c29d1ab0c44ab54b04fa6ac796c, type: 3}
+  m_Script: {fileID: 11500000, guid: c584fcd250734704eb898f10bcc1fee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemToGive: {fileID: 11400000, guid: 29b0998e2fd48474e93a2e966193e563, type: 2}

@@ -441,7 +441,19 @@ MonoBehaviour:
     m_ActionId: f1da5c97-25c4-4b01-88ea-616219d6a0c0
     m_ActionName: Player/Interaction[/Keyboard/e]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3561825546132107211}
+        m_TargetAssemblyTypeName: Equipment, Assembly-CSharp
+        m_MethodName: OnAttackInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 0e62a5a4-deb9-4818-a8c9-3fc59ef3b5a1
     m_ActionName: Player/Attack[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
@@ -502,7 +514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uICondition: {fileID: 0}
   noHungerHealthDecay: 2
-  noDrinkHealthDecay: 0
+  noDrinkHealthDecay: 2
 --- !u!114 &6376724528845835533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,11 +529,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkRate: 0.05
   maxCheckDistance: 3
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 256
   curInteractGameObject: {fileID: 0}
   promptText: {fileID: 0}
+  hideDelay: 0.15
 --- !u!114 &3561825546132107211
 MonoBehaviour:
   m_ObjectHideFlags: 0
