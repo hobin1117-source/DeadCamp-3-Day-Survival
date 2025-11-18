@@ -43,6 +43,8 @@ public class Monster : MonoBehaviour, IDamagable
 
     public event System.Action OnDeath;
 
+    public bool forceChase = false; //레이드로 소환되는 좀비들
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -106,7 +108,7 @@ public class Monster : MonoBehaviour, IDamagable
             SetState(AIState.Idel);
             Invoke("WanderToNewLocation", Random.Range(minWanderWaitTime, maxWanderWaitTime));
         }
-        if (playerDistance < detectDistance && IsPlayerInFieldOfView())
+        if (forceChase || playerDistance < detectDistance && IsPlayerInFieldOfView())
         {
             SetState(AIState.Attacking);
         }
@@ -137,6 +139,11 @@ public class Monster : MonoBehaviour, IDamagable
 
     void AttackingUpdate()
     {
+        if (forceChase)
+        {
+            agent.isStopped = false;
+            agent.SetDestination(CharacterManager.Instance.Player.transform.position);
+        }
         if (playerDistance < attackDistance && IsPlayerInFieldOfView())
         {
             agent.isStopped = true;
