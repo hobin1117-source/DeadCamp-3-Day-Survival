@@ -631,7 +631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c8143f8026178247b7eb24c6995bdd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  day: {fileID: 0}
+  day: {fileID: 96096444}
   dayCount: 0
   largeZone: {fileID: 1712643870}
   safeZone: {fileID: 577718227}
