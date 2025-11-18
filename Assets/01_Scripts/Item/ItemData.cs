@@ -5,7 +5,8 @@ public enum ItemType
 {
     Equipable,
     Consumable,
-    Resource
+    Resource,
+    Craft
 }
 
 public enum ConsumableType
@@ -14,10 +15,23 @@ public enum ConsumableType
     Hunger
 }
 
+public enum CraftType
+{
+    Wood,
+    Stone,
+}
+
 [Serializable]
 public class ItemDataConsumable
 {
     public ConsumableType type;
+    public float value;
+}
+
+[Serializable]
+public class ItemDataCraft
+{
+    public CraftType type;
     public float value;
 }
 
@@ -38,6 +52,9 @@ public class ItemData : ScriptableObject
 
     [Header("Consumable")]
     public ItemDataConsumable[] cosumables;
+
+    [Header("CraftType")]
+    public ItemDataCraft[] crafts;
 
     [Header("Equip")]
     public GameObject equipPrefab;

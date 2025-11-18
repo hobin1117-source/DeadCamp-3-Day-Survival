@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +7,7 @@ public class ItemSlot : MonoBehaviour
     public ItemData item;
 
     public UIInventory inventory;
+    public UICraft craft;
     public Button button;
     public Image icon;
     public TextMeshProUGUI quatityText;
@@ -48,5 +49,10 @@ public class ItemSlot : MonoBehaviour
     public void OnClickButton()
     {
         inventory.SelectItem(index);
+    }
+
+    public void OnClickCraftButton()
+    {
+        craft.SelectItem(index);
     }
 }
