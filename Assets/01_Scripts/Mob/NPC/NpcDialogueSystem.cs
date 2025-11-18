@@ -26,6 +26,69 @@ public class NpcDialogueSystem : MonoBehaviour
 
     private float sqrDetectionRange;
 
+    void Update()
+{
+    if (playerTransform == null) return;
+
+    Vector3 offset = playerTransform.position - transform.position;
+    float sqrDistance = offset.sqrMagnitude;
+    float currentDistance = Mathf.Sqrt(sqrDistance); // Debug.Log를 위해 이 줄은 유지
+
+    bool currentlyInRange = sqrDistance <= sqrDetectionRange;
+
+
+    if (currentlyInRange && !isPlayerInRange)
+    {
+        isPlayerInRange = true;
+        if (!isDialogueActive && interactionPrompt != null)
+        {
+            interactionPrompt.SetActive(true);
+        }
+        Debug.Log($"플레이어 현재 거리: {currentDistance:F2} m"); 
+    }
+    else if (!currentlyInRange && isPlayerInRange)
+    {
+        isPlayerInRange = false;
+        EndDialogue();
+        if (interactionPrompt != null)
+        {
+            interactionPrompt.SetActive(false);
+        }
+        Debug.Log($" 플레이어 마지막 거리: {currentDistance:F2} m"); 
+    }
+     
+
+        if (currentlyInRange && !isPlayerInRange)
+        {
+            isPlayerInRange = true;
+            if (!isDialogueActive && interactionPrompt != null)
+            {
+                interactionPrompt.SetActive(true);
+            }
+        }
+        else if (!currentlyInRange && isPlayerInRange)
+        {
+            isPlayerInRange = false;
+            EndDialogue();
+            if (interactionPrompt != null)
+            {
+                interactionPrompt.SetActive(false);
+            }
+        }
+
+
+        if (isPlayerInRange && Input.GetKeyDown(interactionKey))
+        {
+            if (!isDialogueActive)
+            {
+                StartDialogue(); // 대화 시작
+            }
+            else
+            {
+                AdvanceDialogue(); // 다음 대사로 진행
+            }
+        }
+    }
     void Start()
     {
        
@@ -47,50 +110,7 @@ public class NpcDialogueSystem : MonoBehaviour
         if (interactionPrompt != null) interactionPrompt.SetActive(false);
     }
 
-    void Update()
-    {
-        if (playerTransform == null) return;
-
-
-        Vector3 offset = playerTransform.position - transform.position;
-        float sqrDistance = offset.sqrMagnitude;
-        bool currentlyInRange = sqrDistance <= sqrDetectionRange;
-
-        // 1. 실제 거리(제곱근)를 계산하여 디버그 로그로 출력
-        float currentDistance = Mathf.Sqrt(sqrDistance);
-      //   Debug.Log($"[NPC 간격] 현재 플레이어와의 거리: {currentDistance:F2} m"); 
-
-        if (currentlyInRange && !isPlayerInRange)
-        {
-            isPlayerInRange = true;
-            if (!isDialogueActive && interactionPrompt != null)
-            {
-                interactionPrompt.SetActive(true); 
-            }
-        }
-        else if (!currentlyInRange && isPlayerInRange) 
-        {
-            isPlayerInRange = false;
-            EndDialogue(); 
-            if (interactionPrompt != null)
-            {
-                interactionPrompt.SetActive(false);
-            }
-        }
-
-    
-        if (isPlayerInRange && Input.GetKeyDown(interactionKey))
-        {
-            if (!isDialogueActive)
-            {
-                StartDialogue(); // 대화 시작
-            }
-            else
-            {
-                AdvanceDialogue(); // 다음 대사로 진행
-            }
-        }
-    }
+  
 
     // 대화 시작 함수
     void StartDialogue()

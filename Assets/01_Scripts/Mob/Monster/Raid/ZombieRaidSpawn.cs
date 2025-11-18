@@ -63,6 +63,9 @@ public class ZombieRaidSpawn : MonoBehaviour
             GameObject m = Instantiate(prefab, hit.position, Quaternion.identity);
             currentRaidMonsters++;
 
+            Monster mon = m.GetComponent<Monster>();
+            mon.forceChase = true;
+
             m.GetComponent<Monster>().OnDeath += () =>
             {
                 currentRaidMonsters--;

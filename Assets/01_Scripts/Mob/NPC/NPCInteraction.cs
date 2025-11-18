@@ -1,21 +1,21 @@
-using UnityEngine;
-using UnityEngine.UI; // UI ¿ä¼Ò¸¦ »ç¿ëÇÏ·Á¸é ÀÌ ³×ÀÓ½ºÆäÀÌ½º°¡ ÇÊ¿äÇÕ´Ï´Ù.
+ï»¿using UnityEngine;
+using UnityEngine.UI; // UI ìš”ì†Œë¥¼ ì‚¬ìš©í•˜ë ¤ë©´ ì´ ë„¤ì„ìŠ¤í˜ì´ìŠ¤ê°€ í•„ìš”í•©ë‹ˆë‹¤.
 
 public class NpcInteraction : MonoBehaviour
 {
-    // === ÀÎ½ºÆåÅÍ¿¡¼­ ¼³Á¤ÇÒ º¯¼öµé ===
-    [Header("UI ¼³Á¤")]
-    public GameObject interactionUI; // ¶ç¿ì°í ½ÍÀº UI ÆĞ³Î/Äµ¹ö½º
-    public float detectionRange = 5.0f; // ÇÃ·¹ÀÌ¾î¸¦ °¨ÁöÇÒ °Å¸® (¹İ°æ)
+    // === ì¸ìŠ¤í™í„°ì—ì„œ ì„¤ì •í•  ë³€ìˆ˜ë“¤ ===
+    [Header("UI ì„¤ì •")]
+    public GameObject interactionUI; // ë„ìš°ê³  ì‹¶ì€ UI íŒ¨ë„/ìº”ë²„ìŠ¤
+    public float detectionRange = 5.0f; // í”Œë ˆì´ì–´ë¥¼ ê°ì§€í•  ê±°ë¦¬ (ë°˜ê²½)
 
-    // === ³»ºÎ º¯¼öµé ===
+    // === ë‚´ë¶€ ë³€ìˆ˜ë“¤ ===
     private Transform playerTransform;
     private bool isPlayerInRange = false;
 
     void Start()
     {
-        // ¾À¿¡¼­ "Player" ÅÂ±×¸¦ °¡Áø ¿ÀºêÁ§Æ®¸¦ Ã£¾Æ TransformÀ» ÀúÀåÇÕ´Ï´Ù.
-        // ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®¿¡ 'Player' ÅÂ±×°¡ ¼³Á¤µÇ¾î ÀÖ¾î¾ß ÇÕ´Ï´Ù.
+        // ì”¬ì—ì„œ "Player" íƒœê·¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì•„ Transformì„ ì €ì¥í•©ë‹ˆë‹¤.
+        // í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸ì— 'Player' íƒœê·¸ê°€ ì„¤ì •ë˜ì–´ ìˆì–´ì•¼ í•©ë‹ˆë‹¤.
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
@@ -23,10 +23,10 @@ public class NpcInteraction : MonoBehaviour
         }
         else
         {
-            Debug.LogError("¾À¿¡ 'Player' ÅÂ±×¸¦ °¡Áø ¿ÀºêÁ§Æ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù!");
+            Debug.LogError("ì”¬ì— 'Player' íƒœê·¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
         }
 
-        // ½ÃÀÛÇÒ ¶§ UI¸¦ ºñÈ°¼ºÈ­ÇÕ´Ï´Ù.
+        // ì‹œì‘í•  ë•Œ UIë¥¼ ë¹„í™œì„±í™”í•©ë‹ˆë‹¤.
         if (interactionUI != null)
         {
             interactionUI.SetActive(false);
@@ -37,33 +37,33 @@ public class NpcInteraction : MonoBehaviour
     {
         if (playerTransform == null || interactionUI == null)
         {
-            return; // ÇÃ·¹ÀÌ¾î³ª UI°¡ ¼³Á¤µÇÁö ¾Ê¾Ò´Ù¸é ¾Æ¹«°Íµµ ÇÏÁö ¾Ê½À´Ï´Ù.
+            return; // í”Œë ˆì´ì–´ë‚˜ UIê°€ ì„¤ì •ë˜ì§€ ì•Šì•˜ë‹¤ë©´ ì•„ë¬´ê²ƒë„ í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
         }
 
-        // 1. ÇöÀç NPC¿Í ÇÃ·¹ÀÌ¾î »çÀÌÀÇ °Å¸®¸¦ °è»êÇÕ´Ï´Ù.
+        // 1. í˜„ì¬ NPCì™€ í”Œë ˆì´ì–´ ì‚¬ì´ì˜ ê±°ë¦¬ë¥¼ ê³„ì‚°í•©ë‹ˆë‹¤.
         float distance = Vector3.Distance(transform.position, playerTransform.position);
 
-        // 2. °Å¸®°¡ °¨Áö ¹üÀ§ ÀÌ³»ÀÎÁö È®ÀÎÇÕ´Ï´Ù.
+        // 2. ê±°ë¦¬ê°€ ê°ì§€ ë²”ìœ„ ì´ë‚´ì¸ì§€ í™•ì¸í•©ë‹ˆë‹¤.
         if (distance <= detectionRange)
         {
-            // ÇÃ·¹ÀÌ¾î°¡ ¹üÀ§ ¾È¿¡ µé¾î¿ÔÀ» ¶§
-            if (!isPlayerInRange) // ÇÑ ¹ø¸¸ ½ÇÇàµÇµµ·Ï Ã¼Å©
+            // í”Œë ˆì´ì–´ê°€ ë²”ìœ„ ì•ˆì— ë“¤ì–´ì™”ì„ ë•Œ
+            if (!isPlayerInRange) // í•œ ë²ˆë§Œ ì‹¤í–‰ë˜ë„ë¡ ì²´í¬
             {
                 isPlayerInRange = true;
-                // UI È°¼ºÈ­
+                // UI í™œì„±í™”
                 interactionUI.SetActive(true);
-                Debug.Log("ÇÃ·¹ÀÌ¾î°¡ Á¢±ÙÇß½À´Ï´Ù. UI È°¼ºÈ­.");
+                Debug.Log("í”Œë ˆì´ì–´ê°€ ì ‘ê·¼í–ˆìŠµë‹ˆë‹¤. UI í™œì„±í™”.");
             }
         }
         else
         {
-            // ÇÃ·¹ÀÌ¾î°¡ ¹üÀ§ ¹ÛÀ¸·Î ³ª°¬À» ¶§
-            if (isPlayerInRange) // ÇÑ ¹ø¸¸ ½ÇÇàµÇµµ·Ï Ã¼Å©
+            // í”Œë ˆì´ì–´ê°€ ë²”ìœ„ ë°–ìœ¼ë¡œ ë‚˜ê°”ì„ ë•Œ
+            if (isPlayerInRange) // í•œ ë²ˆë§Œ ì‹¤í–‰ë˜ë„ë¡ ì²´í¬
             {
                 isPlayerInRange = false;
-                // UI ºñÈ°¼ºÈ­
+                // UI ë¹„í™œì„±í™”
                 interactionUI.SetActive(false);
-                Debug.Log("ÇÃ·¹ÀÌ¾î°¡ ¸Ö¾îÁ³½À´Ï´Ù. UI ºñÈ°¼ºÈ­.");
+                Debug.Log("í”Œë ˆì´ì–´ê°€ ë©€ì–´ì¡ŒìŠµë‹ˆë‹¤. UI ë¹„í™œì„±í™”.");
             }
         }
     }

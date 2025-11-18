@@ -1,4 +1,4 @@
-using TMPro;
+ï»¿using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,8 +15,8 @@ public class Interaction : MonoBehaviour
     public TextMeshProUGUI promptText;
     private Camera camera;
 
-    [SerializeField] private float hideDelay = 0.15f; // ÇÁ·ÒÇÁÆ®¸¦ ²ô±â±îÁö ±â´Ù¸± ½Ã°£
-    private float lastHitInteractTime;                // ¸¶Áö¸·À¸·Î »óÈ£ÀÛ¿ë °¡´ÉÇÑ °É º» ½Ã°£
+    [SerializeField] private float hideDelay = 0.15f; // í”„ë¡¬í”„íŠ¸ë¥¼ ë„ê¸°ê¹Œì§€ ê¸°ë‹¤ë¦´ ì‹œê°„
+    private float lastHitInteractTime;                // ë§ˆì§€ë§‰ìœ¼ë¡œ ìƒí˜¸ìž‘ìš© ê°€ëŠ¥í•œ ê±¸ ë³¸ ì‹œê°„
 
     void Start()
     {
@@ -40,7 +40,7 @@ public class Interaction : MonoBehaviour
 
                 if (interactable != null)
                 {
-                    // »óÈ£ÀÛ¿ë °¡´ÉÇÑ °É º» ½Ã°¢ ÀúÀå
+                    // ìƒí˜¸ìž‘ìš© ê°€ëŠ¥í•œ ê±¸ ë³¸ ì‹œê° ì €ìž¥
                     lastHitInteractTime = Time.time;
 
                     if (hit.collider.gameObject != curInteractGameObject)
@@ -52,7 +52,7 @@ public class Interaction : MonoBehaviour
                 }
                 else
                 {
-                    // ÀÏÁ¤ ½Ã°£ µ¿¾ÈÀº ±×³É ±×´ë·Î µÎ°í, ±× ÀÌÈÄ¿¡¸¸ ²û
+                    // ì¼ì • ì‹œê°„ ë™ì•ˆì€ ê·¸ëƒ¥ ê·¸ëŒ€ë¡œ ë‘ê³ , ê·¸ ì´í›„ì—ë§Œ ë”
                     if (Time.time - lastHitInteractTime > hideDelay)
                     {
                         ClearPrompt();
@@ -78,7 +78,7 @@ public class Interaction : MonoBehaviour
     }
     private void SetPromptText()
     {
-        // ¾ÈÀüÀåÄ¡
+        // ì•ˆì „ìž¥ì¹˜
         if (promptText == null || curInteractable == null)
             return;
         promptText.gameObject.SetActive(true);
