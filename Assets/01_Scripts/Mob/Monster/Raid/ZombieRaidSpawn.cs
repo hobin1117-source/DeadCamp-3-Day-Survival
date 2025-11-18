@@ -38,14 +38,17 @@ public class ZombieRaidSpawn : MonoBehaviour
 
     IEnumerator RaidRoutine()
     {
-        RaidWave wave = waves[Mathf.Clamp(dayCount, 0, waves.Length - 1)];
-
-        if (currentRaidMonsters < wave.maxMonsters)
+        while (true)
         {
-            SpawnRaidZombie(wave);
-        }
+            RaidWave wave = waves[Mathf.Clamp(dayCount, 0, waves.Length - 1)];
 
-        yield return new WaitForSeconds(wave.spawnInterval);
+            if (currentRaidMonsters < wave.maxMonsters)
+            {
+                SpawnRaidZombie(wave);
+            }
+
+            yield return new WaitForSeconds(wave.spawnInterval);
+        }
     }
 
     void SpawnRaidZombie(RaidWave wave)
