@@ -1,4 +1,4 @@
-using TMPro;
+ï»¿using TMPro;
 using UnityEngine;
 
 public class UIInventory : MonoBehaviour
@@ -83,7 +83,7 @@ public class UIInventory : MonoBehaviour
         return inventoryWindow.activeInHierarchy;
     }
 
-    // PlayerController ¸ÕÀú ¼öÁ¤
+    // PlayerController ë¨¼ì € ìˆ˜ì •
 
     public void AddItem()
     {
@@ -155,14 +155,14 @@ public class UIInventory : MonoBehaviour
         return null;
     }
 
-    // Player ½ºÅ©¸³Æ® ¸ÕÀú ¼öÁ¤
+    // Player ìŠ¤í¬ë¦½íŠ¸ ë¨¼ì € ìˆ˜ì •
     public void ThrowItem(ItemData data)
     {
         Instantiate(data.dropPrefabs, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360));
     }
 
 
-    // ItemSlot ½ºÅ©¸³Æ® ¸ÕÀú ¼öÁ¤
+    // ItemSlot ìŠ¤í¬ë¦½íŠ¸ ë¨¼ì € ìˆ˜ì •
     public void SelectItem(int index)
     {
         if (slots[index].item == null) return;
@@ -186,6 +186,7 @@ public class UIInventory : MonoBehaviour
         equipButton.SetActive(selectedItem.item.type == ItemType.Equipable && !slots[index].equipped);
         unEquipButton.SetActive(selectedItem.item.type == ItemType.Equipable && slots[index].equipped);
         dropButton.SetActive(true);
+        Debug.Log("Select Item: " + slots[index].item.displayName);
     }
 
     public void OnUseButton()
@@ -218,6 +219,11 @@ public class UIInventory : MonoBehaviour
 
         if (slots[selectedItemIndex].quantity <= 0)
         {
+            if (slots[selectedItemIndex].equipped)
+            {
+                UnEquip(selectedItemIndex);
+            }
+
             selectedItem.item = null;
             slots[selectedItemIndex].item = null;
             selectedItemIndex = -1;
