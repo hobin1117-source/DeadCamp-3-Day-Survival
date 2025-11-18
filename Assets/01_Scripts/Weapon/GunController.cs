@@ -8,9 +8,12 @@ public class GunController : MonoBehaviour
     private float fireCooldown;  // 남은 쿨타임
     private AudioSource audioSource;
 
+    private int monsterLayer;
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        monsterLayer = LayerMask.NameToLayer("Monster");
     }
 
     private void Update()
@@ -87,5 +90,58 @@ public class GunController : MonoBehaviour
         }
 
         Debug.Log("총 발사! (무한 탄약)");
+
+        // 1) 화면 중앙에서 앞으로 레이 쏘기
+        Camera cam = Camera.main;
+        if (cam == null)
+        {
+            Debug.LogWarning("GunController: Main Camera를 찾을 수 없습니다.");
+            return;
+        }
+
+        Ray ray = cam.ScreenPointToRay(
+            new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, currentGun.range))
+        {
+            Debug.Log("총알이 맞은 대상 : " + hit.collider.name);
+
+            // ★ 1) 맞은 오브젝트의 레이어 확인
+            int hitLayer = hit.collider.gameObject.layer;
+
+            if (hitLayer == monsterLayer)
+            {
+                // ─ 좀비인 경우 (Monster 레이어) ─
+
+                // 데미지 주기 (Monster 스크립트가 달려있다면)
+                if (hit.collider.TryGetComponent(out Monster monster))
+                {
+                    monster.TakePhysicalDamage(currentGun.damage);
+                }
+
+                // 피 이펙트 출력
+                SpawnHitEffect(currentGun.bloodEffectPrefab, hit.point, hit.normal);
+            }
+            else
+            {
+                // ─ 좀비가 아닌 경우 ─
+                SpawnHitEffect(currentGun.sparkEffectPrefab, hit.point, hit.normal);
+            }
+        }
     }
+
+    // 이펙트 찍어내는 공통 함수
+    private void SpawnHitEffect(GameObject prefab, Vector3 position, Vector3 normal)
+    {
+        if (prefab == null) return;
+
+        // 표면 방향을 향하도록 회전
+        Quaternion rot = Quaternion.LookRotation(normal);
+        GameObject effect = Instantiate(prefab, position, rot);
+
+        Destroy(effect, 2f); // 2초 후 삭제 (필요에 따라 조절)
+    }
+
 }

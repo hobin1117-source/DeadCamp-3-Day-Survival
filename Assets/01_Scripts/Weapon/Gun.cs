@@ -11,4 +11,8 @@ public class Gun : MonoBehaviour
     public Animator anim;             // Idle, Shoot 애니메이터
     public ParticleSystem muzzleFlash; // 총구 플래시
     public AudioClip fireSound;        // 총소리
+
+    [Header("Hit Effect")]             // 새로 추가
+    public GameObject bloodEffectPrefab; // 좀비 맞았을 때
+    public GameObject sparkEffectPrefab; // 다른 오브젝트 맞았을 때
 }
