@@ -180,4 +180,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemToGive: {fileID: 11400000, guid: 29b0998e2fd48474e93a2e966193e563, type: 2}
   quantityPerHit: 1
-  capacity: 5
+  MaxCapacity: 5
+  curCapacity: 0
+  spawnIndex: 0

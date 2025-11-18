@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GunController : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class GunController : MonoBehaviour
             fireCooldown -= Time.deltaTime;
 
         // 마우스 왼쪽 버튼(기본 "Fire1") 입력
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && !EventSystem.current.IsPointerOverGameObject())
         {
             TryShoot();
         }
