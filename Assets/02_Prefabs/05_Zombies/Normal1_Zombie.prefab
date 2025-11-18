@@ -1937,7 +1937,7 @@ GameObject:
   - component: {fileID: 8438304884589020967}
   - component: {fileID: 8391804111946405899}
   m_Layer: 12
-  m_Name: Normal_Zombie1
+  m_Name: Normal1_Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

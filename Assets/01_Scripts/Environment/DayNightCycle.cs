@@ -25,6 +25,8 @@ public class Day : MonoBehaviour
     public AnimationCurve lightingIntensityMultiplier;
     public AnimationCurve reflectionIntensityMultiplier;
 
+    public float currentHour => time * 24;
+
     // Start is called before the first frame update
     void Start()
     {
