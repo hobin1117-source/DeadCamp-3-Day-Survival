@@ -5,6 +5,11 @@ public class TriggerAudio : MonoBehaviour
     // 재생할 오디오 소스 컴포넌트를 연결할 변수
     private AudioSource audioSource;
 
+    // ✨ 인스펙터에서 설정할 "감지 대상" 레이어 마스크를 추가했어!
+    // 여기에 플레이어와 몬스터 레이어를 모두 체크해주면 돼!
+    [SerializeField]
+    private LayerMask detectionLayers;
+
     // 게임 시작 시 한 번 호출됩니다.
     void Start()
     {
@@ -22,13 +27,13 @@ public class TriggerAudio : MonoBehaviour
     // 여기에서 'other'는 트리거 안으로 들어온 오브젝트의 콜라이더를 나타냅니다.
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("트리거에 뭔가 들어옴: " + other.gameObject.name); // 디버깅용
+        Debug.Log("트리거에 감지 되었습니다: " + other.gameObject.name);
 
-        // 들어온 오브젝트의 태그가 "Enemy"인지 확인합니다.
-        // 이때, other.gameObject.tag는 대소문자를 구분하니 정확하게 일치해야 합니다!
-        if (other.gameObject.CompareTag("Player"))
+        // ✨ 레이어 마스크를 사용해서 플레이어와 몬스터 모두 감지하도록 수정!
+        // `detectionLayers`에 Player 레이어와 Monster 레이어를 모두 체크해줬다고 가정하고 쓰는 코드야!
+        if (((1 << other.gameObject.layer) & detectionLayers) != 0)
         {
-            Debug.Log("적이 감지되었습니다: " + other.gameObject.name); // 디버깅용
+            Debug.Log($"Player 또는 Monster 감지되었습니다: {other.gameObject.name}");
 
             // AudioSource가 존재하고, 현재 재생 중이 아니라면 오디오를 재생합니다.
             if (audioSource != null && !audioSource.isPlaying)
@@ -43,13 +48,14 @@ public class TriggerAudio : MonoBehaviour
     // 적이 밖으로 나가면 오디오를 끄고 싶을 때 사용합니다.
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        // ✨ 여기도 동일하게 `detectionLayers`를 사용하도록 수정!
+        if (((1 << other.gameObject.layer) & detectionLayers) != 0)
         {
             // AudioSource가 존재하고, 현재 재생 중이라면 오디오를 멈춥니다.
             if (audioSource != null && audioSource.isPlaying)
             {
                 audioSource.Stop(); // 오디오 멈춤!
-                Debug.Log("적이 나갔습니다. 오디오 정지!");
+                Debug.Log($"Player 또는 Monster 나갔습니다. 오디오 정지!");
             }
         }
     }
