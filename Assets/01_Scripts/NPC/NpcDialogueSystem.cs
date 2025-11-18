@@ -58,7 +58,7 @@ public class NpcDialogueSystem : MonoBehaviour
 
         // 1. 실제 거리(제곱근)를 계산하여 디버그 로그로 출력
         float currentDistance = Mathf.Sqrt(sqrDistance);
-        Debug.Log($"[NPC 간격] 현재 플레이어와의 거리: {currentDistance:F2} m"); 
+      //   Debug.Log($"[NPC 간격] 현재 플레이어와의 거리: {currentDistance:F2} m"); 
 
         if (currentlyInRange && !isPlayerInRange)
         {

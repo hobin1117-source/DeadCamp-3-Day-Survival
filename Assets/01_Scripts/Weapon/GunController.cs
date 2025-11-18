@@ -123,7 +123,7 @@ public class GunController : MonoBehaviour
 
                 // 피 이펙트 출력
                 SpawnHitEffect(currentGun.bloodEffectPrefab, hit.point, hit.normal);
-            }aw
+            }
             else
             {
                 // ─ 좀비가 아닌 경우 ─
