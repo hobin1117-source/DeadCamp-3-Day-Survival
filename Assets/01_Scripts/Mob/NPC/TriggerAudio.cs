@@ -1,55 +1,140 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class TriggerAudio : MonoBehaviour
 {
-    // Àç»ıÇÒ ¿Àµğ¿À ¼Ò½º ÄÄÆ÷³ÍÆ®¸¦ ¿¬°áÇÒ º¯¼ö
+    // ì¬ìƒí•  ì˜¤ë””ì˜¤ ì†ŒìŠ¤ ì»´í¬ë„ŒíŠ¸ë¥¼ ì—°ê²°í•  ë³€ìˆ˜
     private AudioSource audioSource;
 
-    // °ÔÀÓ ½ÃÀÛ ½Ã ÇÑ ¹ø È£ÃâµË´Ï´Ù.
+    // ì¸ìŠ¤í™í„°ì—ì„œ ì„¤ì •í•  "ê°ì§€ ëŒ€ìƒ" ë ˆì´ì–´ ë§ˆìŠ¤í¬
+    [SerializeField]
+    private LayerMask detectionLayers;
+
+    // ë¯¸ë¦¬ ì”¬ì— ë°°ì¹˜ëœ íŒŒí‹°í´ ì‹œìŠ¤í…œì„ ì§ì ‘ í• ë‹¹í•  ìˆ˜ ìˆë„ë¡!
+    public ParticleSystem soundWaveParticleSystem;
+
+    // í˜„ì¬ íŠ¸ë¦¬ê±° ì•ˆì— ìˆëŠ” ê°ì§€ ëŒ€ìƒ ì˜¤ë¸Œì íŠ¸ ìˆ˜ë¥¼ ì„¸ëŠ” ë³€ìˆ˜
+    private int detectedObjectsCount = 0;
+
+    // âœ¨ 3D ì˜¤ë””ì˜¤ ê´€ë ¨ ì„¤ì • ë³€ìˆ˜ë“¤ (ì¸ìŠ¤í™í„°ì—ì„œ ì¡°ì ˆ ê°€ëŠ¥)
+    [Header("3D Audio Settings")]
+    [Tooltip("ì˜¤ë””ì˜¤ê°€ ìµœëŒ€ë¡œ ë“¤ë¦¬ëŠ” ìµœì†Œ ê±°ë¦¬ (ì´ ê±°ë¦¬ ì•ˆì—ì„  ë³¼ë¥¨ ìµœëŒ€)")]
+    public float audioMinDistance = 1f;
+    [Tooltip("ì˜¤ë””ì˜¤ê°€ ë” ì´ìƒ ë“¤ë¦¬ì§€ ì•ŠëŠ” ìµœëŒ€ ê±°ë¦¬")]
+    public float audioMaxDistance = 10f;
+    [Tooltip("ê±°ë¦¬ì— ë”°ë¥¸ ë³¼ë¥¨ ê°ì†Œ ë°©ì‹ (ì„ íƒ: Linear, Logarithmic, Custom)")]
+    public AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic;
+
+
+    // ê²Œì„ ì‹œì‘ ì‹œ í•œ ë²ˆ í˜¸ì¶œë©ë‹ˆë‹¤.
     void Start()
     {
-        // ÀÌ ½ºÅ©¸³Æ®°¡ ºÙ¾îÀÖ´Â ¿ÀºêÁ§Æ®¿¡¼­ AudioSource ÄÄÆ÷³ÍÆ®¸¦ Ã£¾Æ¿É´Ï´Ù.
         audioSource = GetComponent<AudioSource>();
 
-        // ¸¸¾à AudioSource°¡ ¾øÀ¸¸é °æ°í ¸Ş½ÃÁö¸¦ ¶ç¿ó´Ï´Ù.
         if (audioSource == null)
         {
-            Debug.Log("AudioSource ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù! 'DetectionZone' ¿ÀºêÁ§Æ®¿¡ AudioSource¸¦ Ãß°¡ÇØÁÖ¼¼¿ä.");
+            Debug.LogError("AudioSource ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤! ì´ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ë¶™ì¸ ì˜¤ë¸Œì íŠ¸ì— AudioSourceë¥¼ ì¶”ê°€í•´ì£¼ì„¸ìš”.");
+            // AudioSourceê°€ ì—†ìœ¼ë©´ ë‹¤ë¥¸ ê¸°ëŠ¥ë„ ì •ìƒ ì‘ë™ ë¶ˆê°€í•˜ë¯€ë¡œ ìŠ¤í¬ë¦½íŠ¸ ë¹„í™œì„±í™”
+            enabled = false;
+            return;
+        }
+
+        // âœ¨ AudioSourceë¥¼ 3D ê³µê°„ ìŒí–¥ ì„¤ì •ìœ¼ë¡œ ë³€ê²½
+        audioSource.spatialBlend = 1f; // 1.0fëŠ” ì™„ì „í•œ 3D ì‚¬ìš´ë“œ, 0.0fëŠ” 2D ì‚¬ìš´ë“œ
+        audioSource.rolloffMode = rolloffMode;
+        audioSource.minDistance = audioMinDistance;
+        audioSource.maxDistance = audioMaxDistance;
+
+        // ì¶”ê°€ì ìœ¼ë¡œ, ì˜¤ë””ì˜¤ í´ë¦½ì´ í• ë‹¹ë˜ì§€ ì•Šì•˜ë‹¤ë©´ ê²½ê³ 
+        if (audioSource.clip == null)
+        {
+            Debug.LogWarning("AudioSourceì— ì¬ìƒí•  ì˜¤ë””ì˜¤ í´ë¦½ì´ í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
+        }
+
+
+        if (soundWaveParticleSystem == null)
+        {
+            soundWaveParticleSystem = GetComponentInChildren<ParticleSystem>();
+            if (soundWaveParticleSystem == null)
+            {
+                Debug.LogWarning("SoundWaveParticleSystemì´ í• ë‹¹ë˜ì§€ ì•Šì•˜ê±°ë‚˜ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤! ì´í™íŠ¸ê°€ ì¬ìƒë˜ì§€ ì•Šì„ ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
+            }
+        }
+
+        // íŒŒí‹°í´ ì‹œìŠ¤í…œì´ ìˆë‹¤ë©´, ì‹œì‘í•  ë•ŒëŠ” ì¼ë‹¨ ë©ˆì¶°ìˆë„ë¡ ì„¤ì •
+        if (soundWaveParticleSystem != null)
+        {
+            soundWaveParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            // íŒŒí‹°í´ ì‹œìŠ¤í…œ ê²Œì„ ì˜¤ë¸Œì íŠ¸ë„ ë¹„í™œì„±í™” í•´ë‘ëŠ” ê²ƒì´ ì¼ë°˜ì  (ì„ íƒ ì‚¬í•­)
+            // soundWaveParticleSystem.gameObject.SetActive(false); 
         }
     }
 
-    // ´Ù¸¥ Äİ¶óÀÌ´õ°¡ ÀÌ Æ®¸®°Å ¾ÈÀ¸·Î µé¾î¿ÔÀ» ¶§ È£ÃâµË´Ï´Ù.
-    // ¿©±â¿¡¼­ 'other'´Â Æ®¸®°Å ¾ÈÀ¸·Î µé¾î¿Â ¿ÀºêÁ§Æ®ÀÇ Äİ¶óÀÌ´õ¸¦ ³ªÅ¸³À´Ï´Ù.
+    // ë‹¤ë¥¸ ì½œë¼ì´ë”ê°€ ì´ íŠ¸ë¦¬ê±° ì•ˆìœ¼ë¡œ ë“¤ì–´ì™”ì„ ë•Œ í˜¸ì¶œë©ë‹ˆë‹¤.
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Æ®¸®°Å¿¡ ¹º°¡ µé¾î¿È: " + other.gameObject.name); // µğ¹ö±ë¿ë
+        Debug.Log("íŠ¸ë¦¬ê±°ì— ê°ì§€ ë˜ì—ˆìŠµë‹ˆë‹¤: " + other.gameObject.name);
 
-        // µé¾î¿Â ¿ÀºêÁ§Æ®ÀÇ ÅÂ±×°¡ "Enemy"ÀÎÁö È®ÀÎÇÕ´Ï´Ù.
-        // ÀÌ¶§, other.gameObject.tag´Â ´ë¼Ò¹®ÀÚ¸¦ ±¸ºĞÇÏ´Ï Á¤È®ÇÏ°Ô ÀÏÄ¡ÇØ¾ß ÇÕ´Ï´Ù!
-        if (other.gameObject.CompareTag("Player"))
+        if (((1 << other.gameObject.layer) & detectionLayers) != 0)
         {
-            Debug.Log("ÀûÀÌ °¨ÁöµÇ¾ú½À´Ï´Ù: " + other.gameObject.name); // µğ¹ö±ë¿ë
+            // ê°ì§€ëœ ì˜¤ë¸Œì íŠ¸ ìˆ˜ë¥¼ ì¦ê°€ì‹œí‚¤ê³ , ì²˜ìŒ ê°ì§€ëœ ê²½ìš°ì—ë§Œ ì¬ìƒ!
+            detectedObjectsCount++;
+            Debug.Log($"í”Œë ˆì´ì–´ ë˜ëŠ” ëª¬ìŠ¤í„° ê°ì§€ë˜ì—ˆìŠµë‹ˆë‹¤: {other.gameObject.name} (í˜„ì¬ {detectedObjectsCount}ê°œ)");
 
-            // AudioSource°¡ Á¸ÀçÇÏ°í, ÇöÀç Àç»ı ÁßÀÌ ¾Æ´Ï¶ó¸é ¿Àµğ¿À¸¦ Àç»ıÇÕ´Ï´Ù.
-            if (audioSource != null && !audioSource.isPlaying)
+            // ì´ ì˜¤ë¸Œì íŠ¸ê°€ ì²« ë²ˆì§¸ë¡œ ê°ì§€ëœ ì˜¤ë¸Œì íŠ¸ë¼ë©´ ì˜¤ë””ì˜¤ì™€ íŒŒí‹°í´ì„ ì¬ìƒ!
+            if (detectedObjectsCount == 1)
             {
-                audioSource.Play(); // ¿Àµğ¿À Àç»ı!
-                Debug.Log("¿Àµğ¿À°¡ È°¼ºÈ­µÇ¾ú½À´Ï´Ù!");
+                if (audioSource != null && audioSource.clip != null) // ì˜¤ë””ì˜¤ í´ë¦½ì´ ìˆëŠ”ì§€ ì¶”ê°€ í™•ì¸
+                {
+                    audioSource.Play();
+                    Debug.Log("ì˜¤ë””ì˜¤ í™œì„±í™” ë° ì¬ìƒ ì‹œì‘!");
+                }
+                else if (audioSource == null) // AudioSource ìì²´ê°€ ì—†ìœ¼ë©´ ë¡œê·¸ ë‚¨ê¸°ê³  ì•„ë¬´ê²ƒë„ ì•ˆ í•¨
+                {
+                    Debug.LogWarning("AudioSourceê°€ ì—†ì–´ ì˜¤ë””ì˜¤ë¥¼ ì¬ìƒí•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
+                }
+
+                if (soundWaveParticleSystem != null)
+                {
+                    // íŒŒí‹°í´ ì˜¤ë¸Œì íŠ¸ê°€ ë¹„í™œì„±í™”ë˜ì–´ ìˆì—ˆë‹¤ë©´ í™œì„±í™”
+                    if (!soundWaveParticleSystem.gameObject.activeInHierarchy)
+                    {
+                        soundWaveParticleSystem.gameObject.SetActive(true);
+                    }
+                    soundWaveParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                    soundWaveParticleSystem.Play();
+                    Debug.Log("ì‚¬ìš´ë“œ ì›¨ì´ë¸Œ íŒŒí‹°í´ ì‹œìŠ¤í…œ ì¬ìƒ ì‹œì‘!");
+                }
             }
         }
     }
 
-    // ´Ù¸¥ Äİ¶óÀÌ´õ°¡ ÀÌ Æ®¸®°Å ¹ÛÀ¸·Î ³ª°¬À» ¶§ È£ÃâµË´Ï´Ù. (¼±ÅÃ »çÇ×)
-    // ÀûÀÌ ¹ÛÀ¸·Î ³ª°¡¸é ¿Àµğ¿À¸¦ ²ô°í ½ÍÀ» ¶§ »ç¿ëÇÕ´Ï´Ù.
+    // ë‹¤ë¥¸ ì½œë¼ì´ë”ê°€ ì´ íŠ¸ë¦¬ê±° ë°–ìœ¼ë¡œ ë‚˜ê°”ì„ ë•Œ í˜¸ì¶œë©ë‹ˆë‹¤.
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (((1 << other.gameObject.layer) & detectionLayers) != 0)
         {
-            // AudioSource°¡ Á¸ÀçÇÏ°í, ÇöÀç Àç»ı ÁßÀÌ¶ó¸é ¿Àµğ¿À¸¦ ¸ØÃä´Ï´Ù.
-            if (audioSource != null && audioSource.isPlaying)
+            // ê°ì§€ëœ ì˜¤ë¸Œì íŠ¸ ìˆ˜ë¥¼ ê°ì†Œì‹œí‚¤ê³ , ë§ˆì§€ë§‰ ì˜¤ë¸Œì íŠ¸ê°€ ë‚˜ê°€ëŠ” ê²½ìš° ì •ì§€!
+            detectedObjectsCount--;
+            // ìŒìˆ˜ ë°©ì§€ (ì•ˆì „ ì¥ì¹˜)
+            if (detectedObjectsCount < 0) detectedObjectsCount = 0;
+            Debug.Log($"í”Œë ˆì´ì–´ ë˜ëŠ” ëª¬ìŠ¤í„° ë‚˜ê°”ìŠµë‹ˆë‹¤: {other.gameObject.name} (ë‚¨ì€ ê°œìˆ˜: {detectedObjectsCount})");
+
+            // ëª¨ë“  ê°ì§€ ëŒ€ìƒì´ íŠ¸ë¦¬ê±° ë°–ìœ¼ë¡œ ë‚˜ê°”ë‹¤ë©´ ì˜¤ë””ì˜¤ì™€ íŒŒí‹°í´ ì •ì§€!
+            if (detectedObjectsCount == 0)
             {
-                audioSource.Stop(); // ¿Àµğ¿À ¸ØÃã!
-                Debug.Log("ÀûÀÌ ³ª°¬½À´Ï´Ù. ¿Àµğ¿À Á¤Áö!");
+                if (audioSource != null && audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                    Debug.Log("ëª¨ë“  ê°ì§€ ëŒ€ìƒ ë‚˜ê°. ì˜¤ë””ì˜¤ ì •ì§€!");
+                }
+
+                if (soundWaveParticleSystem != null && soundWaveParticleSystem.isPlaying)
+                {
+                    soundWaveParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+                    Debug.Log("ëª¨ë“  ê°ì§€ ëŒ€ìƒ ë‚˜ê°. íŒŒí‹°í´ ì‹œìŠ¤í…œ ì •ì§€!");
+                    // íŒŒí‹°í´ ì‹œìŠ¤í…œì´ ì¬ìƒì„ ë©ˆì¶˜ í›„ ë°”ë¡œ ì˜¤ë¸Œì íŠ¸ ë¹„í™œì„±í™” (ì„ íƒ ì‚¬í•­)
+                    // soundWaveParticleSystem.gameObject.SetActive(false);
+                }
             }
         }
     }
