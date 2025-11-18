@@ -1,223 +1,147 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
-
     [SerializeField]
-    private Gun currentGun;
+    private Gun currentGun;      // 지금 들고 있는 총
 
-    private float currentFireRate;
-
-    private bool isReload = false;
-    public bool isFineSightMode = false;
-
-    // 본래 포지션 값.
-    [SerializeField]
-    private Vector3 originPos;
-
+    private float fireCooldown;  // 남은 쿨타임
     private AudioSource audioSource;
 
-    void Start()
+    private int monsterLayer;
+
+    private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        monsterLayer = LayerMask.NameToLayer("Monster");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        GunFireRateCalc();
-        TryFire();
-        TryReload();
-        TryFineSight();
-    }
+        // ① 아직 총을 안 든 상태면 그냥 리턴
+        if (currentGun == null)
+            return;
+        // 쿨타임 감소
+        if (fireCooldown > 0f)
+            fireCooldown -= Time.deltaTime;
 
-    private void GunFireRateCalc()
-    {
-        if (currentFireRate > 0)
-            currentFireRate -= Time.deltaTime;
-    }
-
-    private void TryFire()
-    {
-        if (Input.GetButton("Fire1") && currentFireRate <= 0 && !isReload)
+        // 마우스 왼쪽 버튼(기본 "Fire1") 입력
+        if (Input.GetButton("Fire1"))
         {
-            Fire();
+            TryShoot();
         }
     }
-
-    private void Fire()
+    public void SetGun(Gun newGun)
     {
-        if (!isReload)
-        {
-            if (currentGun.currentBulletCount > 0)
-                Shoot();
-            else
-            {
-                CancelFineSight();
-                StartCoroutine(ReloadCoroutine());
-            }
+        currentGun = newGun;
+    }
 
+    public void ClearGun()
+    {
+        currentGun = null;
+    }
+    private void TryShoot()
+    {
+        // ② 혹시라도 여기서도 null 이면 안전하게 리턴
+        if (currentGun == null)
+            return;
+        // 아직 쿨타임이면 발사 X
+        if (fireCooldown > 0f)
+            return;
 
-        }
+        Shoot();
     }
 
     private void Shoot()
     {
-        currentGun.currentBulletCount--;
-        currentFireRate = currentGun.fireRate; // 연사 속도 재계산.
-        PlaySE(currentGun.fire_Sound);
-        currentGun.muzzleFlash.Play();
-        StopAllCoroutines();
-        StartCoroutine(RetroActionCoroutine());
+        // 다음 발사까지 쿨타임 설정
+        fireCooldown = currentGun.fireRate;
 
-        Debug.Log("총알 발사함");
-
-    }
-
-    private void TryReload()
-    {
-        if (Input.GetKeyDown(KeyCode.R) && !isReload && currentGun.currentBulletCount < currentGun.reloadBulletCount)
+        // 애니메이션 (Animator에 "Shoot" Trigger가 있다고 가정)
+        if (currentGun.anim != null)
         {
-            CancelFineSight();
-            StartCoroutine(ReloadCoroutine());
+            currentGun.anim.SetTrigger("Shoot");
         }
-    }
 
-    IEnumerator ReloadCoroutine()
-    {
-        if (currentGun.carryBulletCount > 0)
+        // 머즐 플래시
+        if (currentGun.muzzleFlash != null)
         {
-            isReload = true;
+            var go = currentGun.muzzleFlash.gameObject;
+            if (!go.activeSelf)
+                go.SetActive(true);
 
-            currentGun.anim.SetTrigger("Reload");
+            currentGun.muzzleFlash.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            currentGun.muzzleFlash.Play();
+        }
 
+        // 사운드
+        if (audioSource == null)
+        {
+            Debug.LogWarning("GunController: AudioSource가 없습니다.");
+        }
+        else if (currentGun.fireSound == null)
+        {
+            Debug.LogWarning("GunController: fireSound 클립이 비어 있습니다.");
+        }
+        else
+        {
+            Debug.Log("총소리 출력!");
+            audioSource.PlayOneShot(currentGun.fireSound, 0.3f);
+        }
 
-            currentGun.carryBulletCount += currentGun.currentBulletCount;
-            currentGun.currentBulletCount = 0;
+        Debug.Log("총 발사! (무한 탄약)");
 
-            yield return new WaitForSeconds(currentGun.reloadTime);
+        // 1) 화면 중앙에서 앞으로 레이 쏘기
+        Camera cam = Camera.main;
+        if (cam == null)
+        {
+            Debug.LogWarning("GunController: Main Camera를 찾을 수 없습니다.");
+            return;
+        }
 
-            if (currentGun.carryBulletCount >= currentGun.reloadBulletCount)
+        Ray ray = cam.ScreenPointToRay(
+            new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, currentGun.range))
+        {
+            Debug.Log("총알이 맞은 대상 : " + hit.collider.name);
+
+            // ★ 1) 맞은 오브젝트의 레이어 확인
+            int hitLayer = hit.collider.gameObject.layer;
+
+            if (hitLayer == monsterLayer)
             {
-                currentGun.currentBulletCount = currentGun.reloadBulletCount;
-                currentGun.carryBulletCount -= currentGun.reloadBulletCount;
+                // ─ 좀비인 경우 (Monster 레이어) ─
+
+                // 데미지 주기 (Monster 스크립트가 달려있다면)
+                if (hit.collider.TryGetComponent(out Monster monster))
+                {
+                    monster.TakePhysicalDamage(currentGun.damage);
+                }
+
+                // 피 이펙트 출력
+                SpawnHitEffect(currentGun.bloodEffectPrefab, hit.point, hit.normal);
             }
             else
             {
-                currentGun.currentBulletCount = currentGun.carryBulletCount;
-                currentGun.carryBulletCount = 0;
-            }
-
-
-            isReload = false;
-        }
-        else
-        {
-            Debug.Log("소유한 총알이 없습니다.");
-        }
-    }
-
-    private void TryFineSight()
-    {
-        if (Input.GetButtonDown("Fire2") && !isReload)
-        {
-            FineSight();
-        }
-    }
-
-    public void CancelFineSight()
-    {
-        if (isFineSightMode)
-            FineSight();
-    }
-
-    private void FineSight()
-    {
-        isFineSightMode = !isFineSightMode;
-        currentGun.anim.SetBool("FineSightMode", isFineSightMode);
-
-        if (isFineSightMode)
-        {
-            StopAllCoroutines();
-            StartCoroutine(FineSightActivateCoroutine());
-        }
-        else
-        {
-            StopAllCoroutines();
-            StartCoroutine(FineSightDeactivateCoroutine());
-        }
-
-    }
-
-
-    IEnumerator FineSightActivateCoroutine()
-    {
-        while (currentGun.transform.localPosition != currentGun.fineSightOriginPos)
-        {
-            currentGun.transform.localPosition = Vector3.Lerp(currentGun.transform.localPosition, currentGun.fineSightOriginPos, 0.2f);
-            yield return null;
-        }
-    }
-
-    IEnumerator FineSightDeactivateCoroutine()
-    {
-        while (currentGun.transform.localPosition != originPos)
-        {
-            currentGun.transform.localPosition = Vector3.Lerp(currentGun.transform.localPosition, originPos, 0.2f);
-            yield return null;
-        }
-    }
-
-    IEnumerator RetroActionCoroutine()
-    {
-        Vector3 recoilBack = new Vector3(currentGun.retroActionForce, originPos.y, originPos.z);
-        Vector3 retroActionRecoilBack = new Vector3(currentGun.retroActionFineSightForce, currentGun.fineSightOriginPos.y, currentGun.fineSightOriginPos.z);
-
-        if (!isFineSightMode)
-        {
-
-            currentGun.transform.localPosition = originPos;
-
-            // 반동 시작
-            while (currentGun.transform.localPosition.x <= currentGun.retroActionForce - 0.02f)
-            {
-                currentGun.transform.localPosition = Vector3.Lerp(currentGun.transform.localPosition, recoilBack, 0.4f);
-                yield return null;
-            }
-
-            // 원위치
-            while (currentGun.transform.localPosition != originPos)
-            {
-                currentGun.transform.localPosition = Vector3.Lerp(currentGun.transform.localPosition, originPos, 0.1f);
-                yield return null;
+                // ─ 좀비가 아닌 경우 ─
+                SpawnHitEffect(currentGun.sparkEffectPrefab, hit.point, hit.normal);
             }
         }
-        else
-        {
-            currentGun.transform.localPosition = currentGun.fineSightOriginPos;
-
-            // 반동 시작
-            while (currentGun.transform.localPosition.x <= currentGun.retroActionFineSightForce - 0.02f)
-            {
-                currentGun.transform.localPosition = Vector3.Lerp(currentGun.transform.localPosition, retroActionRecoilBack, 0.4f);
-                yield return null;
-            }
-
-            // 원위치
-            while (currentGun.transform.localPosition != currentGun.fineSightOriginPos)
-            {
-                currentGun.transform.localPosition = Vector3.Lerp(currentGun.transform.localPosition, currentGun.fineSightOriginPos, 0.1f);
-                yield return null;
-            }
-        }
-
     }
 
-    private void PlaySE(AudioClip _clip)
+    // 이펙트 찍어내는 공통 함수
+    private void SpawnHitEffect(GameObject prefab, Vector3 position, Vector3 normal)
     {
-        audioSource.clip = _clip;
-        audioSource.Play();
+        if (prefab == null) return;
+
+        // 표면 방향을 향하도록 회전
+        Quaternion rot = Quaternion.LookRotation(normal);
+        GameObject effect = Instantiate(prefab, position, rot);
+
+        Destroy(effect, 2f); // 2초 후 삭제 (필요에 따라 조절)
     }
+
 }
