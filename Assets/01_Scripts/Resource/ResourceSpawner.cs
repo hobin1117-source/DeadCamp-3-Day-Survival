@@ -66,7 +66,9 @@ public class ResourceSpawner : MonoBehaviour
 
                 GameObject go = GetQueue();
                 go.transform.position = spawnPoints[originalSpawnIndex].position;
-                go.GetComponent<Resource>().spawnIndex = originalSpawnIndex;
+
+                Resource resource = go.GetComponent<Resource>();
+                resource.Init(this);
 
                 if (pool.Count <= 5)
                     dealy = spawnDleay;
