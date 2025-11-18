@@ -21,6 +21,7 @@ public class UIInventory : MonoBehaviour
     public GameObject unEquipButton;
     public GameObject dropButton;
 
+
     private int curEquipIndex;
 
     private PlayerController controller;
@@ -62,6 +63,7 @@ public class UIInventory : MonoBehaviour
         equipButton.SetActive(false);
         unEquipButton.SetActive(false);
         dropButton.SetActive(false);
+        
     }
 
     public void Toggle()

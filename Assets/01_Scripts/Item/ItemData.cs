@@ -41,4 +41,9 @@ public class ItemData : ScriptableObject
 
     [Header("Equip")]
     public GameObject equipPrefab;
+
+    [Header("Debug")]
+    public string itemName;
+    public string itemDescription;
+    public Sprite itemIcon;
 }
