@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 
 public class NPCTrigger : MonoBehaviour
@@ -7,9 +7,9 @@ public class NPCTrigger : MonoBehaviour
     public float triggerDistance = 3f;
 
     public TextMeshProUGUI dialogueText;
-    public string message = "¾È³ç, ¿©ÇàÀÚ. Äù½ºÆ®°¡ ÇÊ¿äÇÏ´Ï F¸¦ ´­·¯º¸°Ô.";
+    public string message = "ì•ˆë…•, ì—¬í–‰ì. í€˜ìŠ¤íŠ¸ê°€ í•„ìš”í•˜ë‹ˆ Fë¥¼ ëˆŒëŸ¬ë³´ê²Œ.";
 
-    public GameObject questUI;   // ¡ç Äù½ºÆ® ÆĞ³Î
+    public GameObject questUI;   // â† í€˜ìŠ¤íŠ¸ íŒ¨ë„
 
     bool isShown = false;
     bool isPlayerNear = false;
@@ -45,7 +45,7 @@ public class NPCTrigger : MonoBehaviour
         else if (!isPlayerNear && isShown)
             HideDialogue();
 
-        // FÅ°·Î Äù½ºÆ® Ã¢ ¿­±â
+        // Fí‚¤ë¡œ í€˜ìŠ¤íŠ¸ ì°½ ì—´ê¸°
         if (isPlayerNear && Input.GetKeyDown(KeyCode.F))
         {
             ToggleQuestUI();
@@ -57,14 +57,14 @@ public class NPCTrigger : MonoBehaviour
         isShown = true;
         dialogueText.text = message;
         dialogueText.gameObject.SetActive(true);
-        Debug.Log("[NPC] ´ë»ç Ç¥½ÃµÊ");
+        Debug.Log("[NPC] ëŒ€ì‚¬ í‘œì‹œë¨");
     }
 
     void HideDialogue()
     {
         isShown = false;
         dialogueText.gameObject.SetActive(false);
-        Debug.Log("[NPC] ´ë»ç ¼û±è");
+        Debug.Log("[NPC] ëŒ€ì‚¬ ìˆ¨ê¹€");
     }
 
     void ToggleQuestUI()
@@ -73,8 +73,8 @@ public class NPCTrigger : MonoBehaviour
         questUI.SetActive(newState);
 
         if (newState)
-            Debug.Log("[NPC] Äù½ºÆ® Ã¢ ¿­¸²");
+            Debug.Log("[NPC] í€˜ìŠ¤íŠ¸ ì°½ ì—´ë¦¼");
         else
-            Debug.Log("[NPC] Äù½ºÆ® Ã¢ ´İÈû");
+            Debug.Log("[NPC] í€˜ìŠ¤íŠ¸ ì°½ ë‹«í˜");
     }
 }

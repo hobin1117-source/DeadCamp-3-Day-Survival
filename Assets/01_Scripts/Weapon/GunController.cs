@@ -1,11 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
     [SerializeField]
-    private Gun currentGun;      // Áö±İ µé°í ÀÖ´Â ÃÑ
+    private Gun currentGun;      // ì§€ê¸ˆ ë“¤ê³  ìˆëŠ” ì´
 
-    private float fireCooldown;  // ³²Àº ÄğÅ¸ÀÓ
+    private float fireCooldown;  // ë‚¨ì€ ì¿¨íƒ€ì„
     private AudioSource audioSource;
 
     private int monsterLayer;
@@ -18,14 +18,14 @@ public class GunController : MonoBehaviour
 
     private void Update()
     {
-        // ¨ç ¾ÆÁ÷ ÃÑÀ» ¾È µç »óÅÂ¸é ±×³É ¸®ÅÏ
+        // â‘  ì•„ì§ ì´ì„ ì•ˆ ë“  ìƒíƒœë©´ ê·¸ëƒ¥ ë¦¬í„´
         if (currentGun == null)
             return;
-        // ÄğÅ¸ÀÓ °¨¼Ò
+        // ì¿¨íƒ€ì„ ê°ì†Œ
         if (fireCooldown > 0f)
             fireCooldown -= Time.deltaTime;
 
-        // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ°(±âº» "Fire1") ÀÔ·Â
+        // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼(ê¸°ë³¸ "Fire1") ì…ë ¥
         if (Input.GetButton("Fire1"))
         {
             TryShoot();
@@ -42,10 +42,10 @@ public class GunController : MonoBehaviour
     }
     private void TryShoot()
     {
-        // ¨è È¤½Ã¶óµµ ¿©±â¼­µµ null ÀÌ¸é ¾ÈÀüÇÏ°Ô ¸®ÅÏ
+        // â‘¡ í˜¹ì‹œë¼ë„ ì—¬ê¸°ì„œë„ null ì´ë©´ ì•ˆì „í•˜ê²Œ ë¦¬í„´
         if (currentGun == null)
             return;
-        // ¾ÆÁ÷ ÄğÅ¸ÀÓÀÌ¸é ¹ß»ç X
+        // ì•„ì§ ì¿¨íƒ€ì„ì´ë©´ ë°œì‚¬ X
         if (fireCooldown > 0f)
             return;
 
@@ -54,16 +54,16 @@ public class GunController : MonoBehaviour
 
     private void Shoot()
     {
-        // ´ÙÀ½ ¹ß»ç±îÁö ÄğÅ¸ÀÓ ¼³Á¤
+        // ë‹¤ìŒ ë°œì‚¬ê¹Œì§€ ì¿¨íƒ€ì„ ì„¤ì •
         fireCooldown = currentGun.fireRate;
 
-        // ¾Ö´Ï¸ŞÀÌ¼Ç (Animator¿¡ "Shoot" Trigger°¡ ÀÖ´Ù°í °¡Á¤)
+        // ì• ë‹ˆë©”ì´ì…˜ (Animatorì— "Shoot" Triggerê°€ ìˆë‹¤ê³  ê°€ì •)
         if (currentGun.anim != null)
         {
             currentGun.anim.SetTrigger("Shoot");
         }
 
-        // ¸ÓÁñ ÇÃ·¡½Ã
+        // ë¨¸ì¦ í”Œë˜ì‹œ
         if (currentGun.muzzleFlash != null)
         {
             var go = currentGun.muzzleFlash.gameObject;
@@ -74,28 +74,28 @@ public class GunController : MonoBehaviour
             currentGun.muzzleFlash.Play();
         }
 
-        // »ç¿îµå
+        // ì‚¬ìš´ë“œ
         if (audioSource == null)
         {
-            Debug.LogWarning("GunController: AudioSource°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogWarning("GunController: AudioSourceê°€ ì—†ìŠµë‹ˆë‹¤.");
         }
         else if (currentGun.fireSound == null)
         {
-            Debug.LogWarning("GunController: fireSound Å¬¸³ÀÌ ºñ¾î ÀÖ½À´Ï´Ù.");
+            Debug.LogWarning("GunController: fireSound í´ë¦½ì´ ë¹„ì–´ ìˆìŠµë‹ˆë‹¤.");
         }
         else
         {
-            Debug.Log("ÃÑ¼Ò¸® Ãâ·Â!");
+            Debug.Log("ì´ì†Œë¦¬ ì¶œë ¥!");
             audioSource.PlayOneShot(currentGun.fireSound, 0.3f);
         }
 
-        Debug.Log("ÃÑ ¹ß»ç! (¹«ÇÑ Åº¾à)");
+        Debug.Log("ì´ ë°œì‚¬! (ë¬´í•œ íƒ„ì•½)");
 
-        // 1) È­¸é Áß¾Ó¿¡¼­ ¾ÕÀ¸·Î ·¹ÀÌ ½î±â
+        // 1) í™”ë©´ ì¤‘ì•™ì—ì„œ ì•ìœ¼ë¡œ ë ˆì´ ì˜ê¸°
         Camera cam = Camera.main;
         if (cam == null)
         {
-            Debug.LogWarning("GunController: Main Camera¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogWarning("GunController: Main Cameraë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -106,42 +106,42 @@ public class GunController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, currentGun.range))
         {
-            Debug.Log("ÃÑ¾ËÀÌ ¸ÂÀº ´ë»ó : " + hit.collider.name);
+            Debug.Log("ì´ì•Œì´ ë§ì€ ëŒ€ìƒ : " + hit.collider.name);
 
-            // ¡Ú 1) ¸ÂÀº ¿ÀºêÁ§Æ®ÀÇ ·¹ÀÌ¾î È®ÀÎ
+            // â˜… 1) ë§ì€ ì˜¤ë¸Œì íŠ¸ì˜ ë ˆì´ì–´ í™•ì¸
             int hitLayer = hit.collider.gameObject.layer;
 
             if (hitLayer == monsterLayer)
             {
-                // ¦¡ Á»ºñÀÎ °æ¿ì (Monster ·¹ÀÌ¾î) ¦¡
+                // â”€ ì¢€ë¹„ì¸ ê²½ìš° (Monster ë ˆì´ì–´) â”€
 
-                // µ¥¹ÌÁö ÁÖ±â (Monster ½ºÅ©¸³Æ®°¡ ´Ş·ÁÀÖ´Ù¸é)
+                // ë°ë¯¸ì§€ ì£¼ê¸° (Monster ìŠ¤í¬ë¦½íŠ¸ê°€ ë‹¬ë ¤ìˆë‹¤ë©´)
                 if (hit.collider.TryGetComponent(out Monster monster))
                 {
                     monster.TakePhysicalDamage(currentGun.damage);
                 }
 
-                // ÇÇ ÀÌÆåÆ® Ãâ·Â
+                // í”¼ ì´í™íŠ¸ ì¶œë ¥
                 SpawnHitEffect(currentGun.bloodEffectPrefab, hit.point, hit.normal);
             }
             else
             {
-                // ¦¡ Á»ºñ°¡ ¾Æ´Ñ °æ¿ì ¦¡
+                // â”€ ì¢€ë¹„ê°€ ì•„ë‹Œ ê²½ìš° â”€
                 SpawnHitEffect(currentGun.sparkEffectPrefab, hit.point, hit.normal);
             }
         }
     }
 
-    // ÀÌÆåÆ® Âï¾î³»´Â °øÅë ÇÔ¼ö
+    // ì´í™íŠ¸ ì°ì–´ë‚´ëŠ” ê³µí†µ í•¨ìˆ˜
     private void SpawnHitEffect(GameObject prefab, Vector3 position, Vector3 normal)
     {
         if (prefab == null) return;
 
-        // Ç¥¸é ¹æÇâÀ» ÇâÇÏµµ·Ï È¸Àü
+        // í‘œë©´ ë°©í–¥ì„ í–¥í•˜ë„ë¡ íšŒì „
         Quaternion rot = Quaternion.LookRotation(normal);
         GameObject effect = Instantiate(prefab, position, rot);
 
-        Destroy(effect, 2f); // 2ÃÊ ÈÄ »èÁ¦ (ÇÊ¿ä¿¡ µû¶ó Á¶Àı)
+        Destroy(effect, 2f); // 2ì´ˆ í›„ ì‚­ì œ (í•„ìš”ì— ë”°ë¼ ì¡°ì ˆ)
     }
 
 }

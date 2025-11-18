@@ -1,55 +1,55 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class TriggerAudio : MonoBehaviour
 {
-    // Àç»ýÇÒ ¿Àµð¿À ¼Ò½º ÄÄÆ÷³ÍÆ®¸¦ ¿¬°áÇÒ º¯¼ö
+    // ìž¬ìƒí•  ì˜¤ë””ì˜¤ ì†ŒìŠ¤ ì»´í¬ë„ŒíŠ¸ë¥¼ ì—°ê²°í•  ë³€ìˆ˜
     private AudioSource audioSource;
 
-    // °ÔÀÓ ½ÃÀÛ ½Ã ÇÑ ¹ø È£ÃâµË´Ï´Ù.
+    // ê²Œìž„ ì‹œìž‘ ì‹œ í•œ ë²ˆ í˜¸ì¶œë©ë‹ˆë‹¤.
     void Start()
     {
-        // ÀÌ ½ºÅ©¸³Æ®°¡ ºÙ¾îÀÖ´Â ¿ÀºêÁ§Æ®¿¡¼­ AudioSource ÄÄÆ÷³ÍÆ®¸¦ Ã£¾Æ¿É´Ï´Ù.
+        // ì´ ìŠ¤í¬ë¦½íŠ¸ê°€ ë¶™ì–´ìžˆëŠ” ì˜¤ë¸Œì íŠ¸ì—ì„œ AudioSource ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì•„ì˜µë‹ˆë‹¤.
         audioSource = GetComponent<AudioSource>();
 
-        // ¸¸¾à AudioSource°¡ ¾øÀ¸¸é °æ°í ¸Þ½ÃÁö¸¦ ¶ç¿ó´Ï´Ù.
+        // ë§Œì•½ AudioSourceê°€ ì—†ìœ¼ë©´ ê²½ê³  ë©”ì‹œì§€ë¥¼ ë„ì›ë‹ˆë‹¤.
         if (audioSource == null)
         {
-            Debug.Log("AudioSource ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù! 'DetectionZone' ¿ÀºêÁ§Æ®¿¡ AudioSource¸¦ Ãß°¡ÇØÁÖ¼¼¿ä.");
+            Debug.Log("AudioSource ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤! 'DetectionZone' ì˜¤ë¸Œì íŠ¸ì— AudioSourceë¥¼ ì¶”ê°€í•´ì£¼ì„¸ìš”.");
         }
     }
 
-    // ´Ù¸¥ ÄÝ¶óÀÌ´õ°¡ ÀÌ Æ®¸®°Å ¾ÈÀ¸·Î µé¾î¿ÔÀ» ¶§ È£ÃâµË´Ï´Ù.
-    // ¿©±â¿¡¼­ 'other'´Â Æ®¸®°Å ¾ÈÀ¸·Î µé¾î¿Â ¿ÀºêÁ§Æ®ÀÇ ÄÝ¶óÀÌ´õ¸¦ ³ªÅ¸³À´Ï´Ù.
+    // ë‹¤ë¥¸ ì½œë¼ì´ë”ê°€ ì´ íŠ¸ë¦¬ê±° ì•ˆìœ¼ë¡œ ë“¤ì–´ì™”ì„ ë•Œ í˜¸ì¶œë©ë‹ˆë‹¤.
+    // ì—¬ê¸°ì—ì„œ 'other'ëŠ” íŠ¸ë¦¬ê±° ì•ˆìœ¼ë¡œ ë“¤ì–´ì˜¨ ì˜¤ë¸Œì íŠ¸ì˜ ì½œë¼ì´ë”ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Æ®¸®°Å¿¡ ¹º°¡ µé¾î¿È: " + other.gameObject.name); // µð¹ö±ë¿ë
+        Debug.Log("íŠ¸ë¦¬ê±°ì— ë­”ê°€ ë“¤ì–´ì˜´: " + other.gameObject.name); // ë””ë²„ê¹…ìš©
 
-        // µé¾î¿Â ¿ÀºêÁ§Æ®ÀÇ ÅÂ±×°¡ "Enemy"ÀÎÁö È®ÀÎÇÕ´Ï´Ù.
-        // ÀÌ¶§, other.gameObject.tag´Â ´ë¼Ò¹®ÀÚ¸¦ ±¸ºÐÇÏ´Ï Á¤È®ÇÏ°Ô ÀÏÄ¡ÇØ¾ß ÇÕ´Ï´Ù!
+        // ë“¤ì–´ì˜¨ ì˜¤ë¸Œì íŠ¸ì˜ íƒœê·¸ê°€ "Enemy"ì¸ì§€ í™•ì¸í•©ë‹ˆë‹¤.
+        // ì´ë•Œ, other.gameObject.tagëŠ” ëŒ€ì†Œë¬¸ìžë¥¼ êµ¬ë¶„í•˜ë‹ˆ ì •í™•í•˜ê²Œ ì¼ì¹˜í•´ì•¼ í•©ë‹ˆë‹¤!
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("ÀûÀÌ °¨ÁöµÇ¾ú½À´Ï´Ù: " + other.gameObject.name); // µð¹ö±ë¿ë
+            Debug.Log("ì ì´ ê°ì§€ë˜ì—ˆìŠµë‹ˆë‹¤: " + other.gameObject.name); // ë””ë²„ê¹…ìš©
 
-            // AudioSource°¡ Á¸ÀçÇÏ°í, ÇöÀç Àç»ý ÁßÀÌ ¾Æ´Ï¶ó¸é ¿Àµð¿À¸¦ Àç»ýÇÕ´Ï´Ù.
+            // AudioSourceê°€ ì¡´ìž¬í•˜ê³ , í˜„ìž¬ ìž¬ìƒ ì¤‘ì´ ì•„ë‹ˆë¼ë©´ ì˜¤ë””ì˜¤ë¥¼ ìž¬ìƒí•©ë‹ˆë‹¤.
             if (audioSource != null && !audioSource.isPlaying)
             {
-                audioSource.Play(); // ¿Àµð¿À Àç»ý!
-                Debug.Log("¿Àµð¿À°¡ È°¼ºÈ­µÇ¾ú½À´Ï´Ù!");
+                audioSource.Play(); // ì˜¤ë””ì˜¤ ìž¬ìƒ!
+                Debug.Log("ì˜¤ë””ì˜¤ê°€ í™œì„±í™”ë˜ì—ˆìŠµë‹ˆë‹¤!");
             }
         }
     }
 
-    // ´Ù¸¥ ÄÝ¶óÀÌ´õ°¡ ÀÌ Æ®¸®°Å ¹ÛÀ¸·Î ³ª°¬À» ¶§ È£ÃâµË´Ï´Ù. (¼±ÅÃ »çÇ×)
-    // ÀûÀÌ ¹ÛÀ¸·Î ³ª°¡¸é ¿Àµð¿À¸¦ ²ô°í ½ÍÀ» ¶§ »ç¿ëÇÕ´Ï´Ù.
+    // ë‹¤ë¥¸ ì½œë¼ì´ë”ê°€ ì´ íŠ¸ë¦¬ê±° ë°–ìœ¼ë¡œ ë‚˜ê°”ì„ ë•Œ í˜¸ì¶œë©ë‹ˆë‹¤. (ì„ íƒ ì‚¬í•­)
+    // ì ì´ ë°–ìœ¼ë¡œ ë‚˜ê°€ë©´ ì˜¤ë””ì˜¤ë¥¼ ë„ê³  ì‹¶ì„ ë•Œ ì‚¬ìš©í•©ë‹ˆë‹¤.
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            // AudioSource°¡ Á¸ÀçÇÏ°í, ÇöÀç Àç»ý ÁßÀÌ¶ó¸é ¿Àµð¿À¸¦ ¸ØÃä´Ï´Ù.
+            // AudioSourceê°€ ì¡´ìž¬í•˜ê³ , í˜„ìž¬ ìž¬ìƒ ì¤‘ì´ë¼ë©´ ì˜¤ë””ì˜¤ë¥¼ ë©ˆì¶¥ë‹ˆë‹¤.
             if (audioSource != null && audioSource.isPlaying)
             {
-                audioSource.Stop(); // ¿Àµð¿À ¸ØÃã!
-                Debug.Log("ÀûÀÌ ³ª°¬½À´Ï´Ù. ¿Àµð¿À Á¤Áö!");
+                audioSource.Stop(); // ì˜¤ë””ì˜¤ ë©ˆì¶¤!
+                Debug.Log("ì ì´ ë‚˜ê°”ìŠµë‹ˆë‹¤. ì˜¤ë””ì˜¤ ì •ì§€!");
             }
         }
     }
