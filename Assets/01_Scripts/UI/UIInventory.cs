@@ -1,5 +1,6 @@
-using TMPro;
+Ôªøusing TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIInventory : MonoBehaviour
 {
@@ -20,12 +21,31 @@ public class UIInventory : MonoBehaviour
     public GameObject equipButton;
     public GameObject unEquipButton;
     public GameObject dropButton;
-
+    public Button useBtn;
+    public Button dropBtn;
+    public Button equipBtn;
+    public Button unEquipBtn;
 
     private int curEquipIndex;
 
     private PlayerController controller;
     private PlayerCondition condition;
+
+    private void OnEnable()
+    {
+        useBtn.onClick.AddListener(OnUseButton);
+        dropBtn.onClick.AddListener(OnDropButton);
+        equipBtn.onClick.AddListener(OnEquipButton);
+        unEquipBtn.onClick.AddListener(OnUnEquipButton);
+    }
+
+    private void OnDisable()
+    {
+        useBtn.onClick.RemoveAllListeners();
+        dropBtn.onClick.RemoveAllListeners();
+        equipBtn.onClick.RemoveAllListeners();
+        unEquipBtn.onClick.RemoveAllListeners();
+    }
 
     void Start()
     {
@@ -83,7 +103,7 @@ public class UIInventory : MonoBehaviour
         return inventoryWindow.activeInHierarchy;
     }
 
-    // PlayerController ∏’¿˙ ºˆ¡§
+    // PlayerController Î®ºÏ†Ä ÏàòÏ†ï
 
     public void AddItem()
     {
@@ -155,14 +175,14 @@ public class UIInventory : MonoBehaviour
         return null;
     }
 
-    // Player Ω∫≈©∏≥∆Æ ∏’¿˙ ºˆ¡§
+    // Player Ïä§ÌÅ¨Î¶ΩÌä∏ Î®ºÏ†Ä ÏàòÏ†ï
     public void ThrowItem(ItemData data)
     {
         Instantiate(data.dropPrefabs, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360));
     }
 
 
-    // ItemSlot Ω∫≈©∏≥∆Æ ∏’¿˙ ºˆ¡§
+    // ItemSlot Ïä§ÌÅ¨Î¶ΩÌä∏ Î®ºÏ†Ä ÏàòÏ†ï
     public void SelectItem(int index)
     {
         if (slots[index].item == null) return;
@@ -218,6 +238,11 @@ public class UIInventory : MonoBehaviour
 
         if (slots[selectedItemIndex].quantity <= 0)
         {
+            if (slots[selectedItemIndex].equipped)
+            {
+                UnEquip(selectedItemIndex);
+            }
+
             selectedItem.item = null;
             slots[selectedItemIndex].item = null;
             selectedItemIndex = -1;
@@ -242,7 +267,7 @@ public class UIInventory : MonoBehaviour
         return total >= quantity;
     }
 
-    public void OnEquipbutton()
+    public void OnEquipButton()
     {
         if (slots[curEquipIndex].equipped)
         {

@@ -24,7 +24,13 @@ public class ItemSlot : MonoBehaviour
 
     private void OnEnable()
     {
+        button.onClick.AddListener(OnClickButton);
         outline.enabled = equipped;
+    }
+
+    private void OnDisable()
+    {
+        button.onClick.RemoveAllListeners();
     }
 
     public void Set()
