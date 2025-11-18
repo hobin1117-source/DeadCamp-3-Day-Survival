@@ -21,6 +21,13 @@ public class DayAlertManager : MonoBehaviour
     void Start()
     {
         alerText.gameObject.SetActive(false);
+
+        float hour = day.time * 24f;
+
+        if (hour >= 6f && hour < 18f)
+        {
+            noticed06 = true;
+        }
     }
 
     void Update()
@@ -31,6 +38,7 @@ public class DayAlertManager : MonoBehaviour
         {
             ShowAlert("해가 저물어갑니다....");
             noticed18 = true;
+            noticed06 = false;
         }
 
         if (!noticed21 && previousHour < 21f && hour >= 21f)
@@ -44,9 +52,14 @@ public class DayAlertManager : MonoBehaviour
             ShowAlert("아침이 찾아왔습니다");
             noticed06 = true;
 
+            ZombieRaidSpawn raid = FindObjectOfType<ZombieRaidSpawn>();
+            if (raid != null)
+            {
+                raid.dayCount++;
+            }
+
             noticed18 = false;
             noticed21 = false;
-            noticed06 = false;
         }
 
         previousHour = hour;
