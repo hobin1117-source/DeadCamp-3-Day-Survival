@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIInventory : MonoBehaviour
 {
@@ -20,12 +21,31 @@ public class UIInventory : MonoBehaviour
     public GameObject equipButton;
     public GameObject unEquipButton;
     public GameObject dropButton;
-
+    public Button useBtn;
+    public Button dropBtn;
+    public Button equipBtn;
+    public Button unEquipBtn;
 
     private int curEquipIndex;
 
     private PlayerController controller;
     private PlayerCondition condition;
+
+    private void OnEnable()
+    {
+        useBtn.onClick.AddListener(OnUseButton);
+        dropBtn.onClick.AddListener(OnDropButton);
+        equipBtn.onClick.AddListener(OnEquipButton);
+        unEquipBtn.onClick.AddListener(OnUnEquipButton);
+    }
+
+    private void OnDisable()
+    {
+        useBtn.onClick.RemoveAllListeners();
+        dropBtn.onClick.RemoveAllListeners();
+        equipBtn.onClick.RemoveAllListeners();
+        unEquipBtn.onClick.RemoveAllListeners();
+    }
 
     void Start()
     {
@@ -186,7 +206,6 @@ public class UIInventory : MonoBehaviour
         equipButton.SetActive(selectedItem.item.type == ItemType.Equipable && !slots[index].equipped);
         unEquipButton.SetActive(selectedItem.item.type == ItemType.Equipable && slots[index].equipped);
         dropButton.SetActive(true);
-        Debug.Log("Select Item: " + slots[index].item.displayName);
     }
 
     public void OnUseButton()
@@ -248,7 +267,7 @@ public class UIInventory : MonoBehaviour
         return total >= quantity;
     }
 
-    public void OnEquipbutton()
+    public void OnEquipButton()
     {
         if (slots[curEquipIndex].equipped)
         {
