@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ObjectPlacer : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class ObjectPlacer : MonoBehaviour
     private bool _inPlacementMode = false;
     private bool _validPreviewState = false;
 
+    public event Action OnObjectPlaced;
 
     public void BuildObject(ItemData data)
     {
@@ -50,12 +52,12 @@ public class ObjectPlacer : MonoBehaviour
 
     private void UpdateInput()
     {
-        // 배치 모드 종료
+        // 실제로 오브젝트 배치
         if (Input.GetMouseButtonDown(0))
         {
             PlaceObject();
         }
-        // 실제로 오브젝트 배치
+        // 배치 모드 종료
         else if (Input.GetMouseButtonDown(1))
         {
             ExitPlacementMode();
@@ -141,6 +143,7 @@ public class ObjectPlacer : MonoBehaviour
 
         Quaternion rotation = Quaternion.Euler(0f, playerCamera.transform.eulerAngles.y, 0f);
         Instantiate(placeableObjectPrefab, _currentPlacementPosition, rotation);
+        OnObjectPlaced?.Invoke();
 
         ExitPlacementMode();
     }
