@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: 1049044937479693270}
   - component: {fileID: 4825434583775732656}
   - component: {fileID: 8468806405096037243}
+  - component: {fileID: 2699331702491422598}
   - component: {fileID: 4493007211541193177}
   m_Layer: 6
   m_Name: Player_PSH
@@ -574,7 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e746a7c65bf0271409836d5ae19145dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 20
   jumpPower: 100
   groundLayerMask:
     serializedVersion: 2
@@ -630,6 +631,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curEquip: {fileID: 0}
   equipParent: {fileID: 9192427697473847855}
+--- !u!114 &2699331702491422598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2254727855610972189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db02210dc402b44cb164876d1bbe21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 0}
+  placeableObjectPrefab: {fileID: 0}
+  playerCamera: {fileID: 1100158963122785601}
+  placementSurfaceLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  validColor: {r: 0.09010506, g: 1, b: 0, a: 0}
+  invalidColor: {r: 1, g: 0, b: 0, a: 0}
+  objectDistanceFromPlayer: 3
+  raycastStartVerticalOffset: 5
+  raycastDistance: 10
 --- !u!82 &4493007211541193177
 AudioSource:
   m_ObjectHideFlags: 0
@@ -799,7 +823,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 3583
+    m_Bits: 11775
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

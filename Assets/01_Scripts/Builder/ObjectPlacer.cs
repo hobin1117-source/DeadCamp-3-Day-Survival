@@ -1,36 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
+ï»¿using System;
 using UnityEngine;
 
 public class ObjectPlacer : MonoBehaviour
 {
     [Header("Placement Parameters")]
-    [SerializeField] private GameObject placeableObjectPrefab;   // ½ÇÁ¦ ¹èÄ¡µÉ ¿ÀºêÁ§Æ® ÇÁ¸®ÆÕ
-    [SerializeField] private GameObject previewObjectPrefab;     // ¹Ì¸®º¸±â(°í½ºÆ®) ÇÁ¸®ÆÕ
-    [SerializeField] private Camera playerCamera;                // ÇÃ·¹ÀÌ¾î Ä«¸Ş¶ó
-    [SerializeField] private LayerMask placementSurfaceLayerMask; // ¹èÄ¡ °¡´ÉÇÑ ¹Ù´Ú ·¹ÀÌ¾î
+    [SerializeField] private ItemData itemData; // ì „ë‹¬ ë°›ì„ ì•„ì´í…œ ë°ì´í„°
+    [SerializeField] private GameObject placeableObjectPrefab;   // ì‹¤ì œ ë°°ì¹˜ë  ì˜¤ë¸Œì íŠ¸ í”„ë¦¬íŒ¹
+    [SerializeField] private Camera playerCamera;                // í”Œë ˆì´ì–´ ì¹´ë©”ë¼
+    [SerializeField] private LayerMask placementSurfaceLayerMask; // ë°°ì¹˜ ê°€ëŠ¥í•œ ë°”ë‹¥ ë ˆì´ì–´
 
     [Header("Preview Material")]
-    [SerializeField] private Material previewMaterial;           // ¹Ì¸®º¸±â¿ë ¸ÓÆ¼¸®¾ó
-    [SerializeField] private Color validColor;     // ¹èÄ¡ °¡´É »ö
-    [SerializeField] private Color invalidColor;     // ¹èÄ¡ ºÒ°¡ »ö
+    private Material previewMaterial; // ë¯¸ë¦¬ë³´ê¸° ë¨¸í‹°ë¦¬ì–¼
+    [SerializeField] private Color validColor;  // ë°°ì¹˜ ê°€ëŠ¥ ìƒ‰
+    [SerializeField] private Color invalidColor;    // ë°°ì¹˜ ë¶ˆê°€ ìƒ‰
 
     [Header("Raycast Parameters")]
-    [SerializeField] private float objectDistanceFromPlayer = 3f;    // Ä«¸Ş¶ó ¾Õ °Å¸®
-    [SerializeField] private float raycastStartVerticalOffset = 5f;  // À§¿¡¼­ ¾Æ·¡·Î ½ò ³ôÀÌ
-    [SerializeField] private float raycastDistance = 10f;            // ¾Æ·¡·Î ½ò °Å¸®
+    [SerializeField] private float objectDistanceFromPlayer = 3f;    // ì¹´ë©”ë¼ ì• ê±°ë¦¬
+    [SerializeField] private float raycastStartVerticalOffset = 5f;  // ìœ„ì—ì„œ ì•„ë˜ë¡œ ì  ë†’ì´
+    [SerializeField] private float raycastDistance = 10f;            // ì•„ë˜ë¡œ ì  ê±°ë¦¬
 
     private GameObject _previewObject = null;
     private Vector3 _currentPlacementPosition = Vector3.zero;
     private bool _inPlacementMode = false;
     private bool _validPreviewState = false;
 
+    public event Action OnObjectPlaced;
+
+    public void BuildObject(ItemData data)
+    {
+        ExitPlacementMode();
+
+        itemData = data;
+        placeableObjectPrefab = itemData.dropPrefabs;
+        _inPlacementMode = true;
+        EnterPlacementMode();
+    }
+
     private void Update()
     {
-        UpdateInput();
-
         if (_inPlacementMode)
         {
+            UpdateInput();
             UpdateCurrentPlacementPosition();
 
             if (CanPlaceObject())
@@ -40,16 +50,51 @@ public class ObjectPlacer : MonoBehaviour
         }
     }
 
+    private void UpdateInput()
+    {
+        // ì‹¤ì œë¡œ ì˜¤ë¸Œì íŠ¸ ë°°ì¹˜
+        if (Input.GetMouseButtonDown(0))
+        {
+            PlaceObject();
+        }
+        // ë°°ì¹˜ ëª¨ë“œ ì¢…ë£Œ
+        else if (Input.GetMouseButtonDown(1))
+        {
+            ExitPlacementMode();
+        }
+    }
+
+    private void EnterPlacementMode()
+    {
+        if (!_inPlacementMode)
+            return;
+
+        if (playerCamera == null)
+        {
+            Debug.LogWarning("ObjectPlacer: playerCameraê°€ ë¹„ì–´ìˆìŠµë‹ˆë‹¤. ì¸ìŠ¤í™í„°ì—ì„œ ì§€ì •í•´ ì£¼ì„¸ìš”.");
+            return;
+        }
+
+        Quaternion rotation = Quaternion.Euler(0f, playerCamera.transform.eulerAngles.y, 0f);
+        _previewObject = Instantiate(placeableObjectPrefab, _currentPlacementPosition, rotation);
+        previewMaterial = _previewObject.GetComponentInChildren<MeshRenderer>().material;
+        _inPlacementMode = true;
+
+        // í•„ìš”í•˜ë‹¤ë©´ ì—¬ê¸°ì„œ ì»¤ì„œ ì ê¸ˆ í•´ì œ ê°™ì€ ê²ƒë„ ê°€ëŠ¥
+        // Cursor.lockState = CursorLockMode.None;
+        // Cursor.visible = true;
+    }
+
     private void UpdateCurrentPlacementPosition()
     {
         if (playerCamera == null || _previewObject == null)
             return;
 
-        // Ä«¸Ş¶óÀÇ ¼öÆò ¹æÇâ º¤ÅÍ
+        // ì¹´ë©”ë¼ì˜ ìˆ˜í‰ ë°©í–¥ ë²¡í„°
         Vector3 cameraForward = new Vector3(playerCamera.transform.forward.x, 0f, playerCamera.transform.forward.z);
         cameraForward.Normalize();
 
-        // Ä«¸Ş¶ó ¾ÕÂÊ À§Ä¡¿¡¼­ À§¿¡¼­ ¾Æ·¡·Î ·¹ÀÌ ½î±â
+        // ì¹´ë©”ë¼ ì•ìª½ ìœ„ì¹˜ì—ì„œ ìœ„ì—ì„œ ì•„ë˜ë¡œ ë ˆì´ ì˜ê¸°
         Vector3 startPos = playerCamera.transform.position + (cameraForward * objectDistanceFromPlayer);
         startPos.y += raycastStartVerticalOffset;
 
@@ -62,25 +107,6 @@ public class ObjectPlacer : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0f, playerCamera.transform.eulerAngles.y, 0f);
         _previewObject.transform.position = _currentPlacementPosition;
         _previewObject.transform.rotation = rotation;
-    }
-
-    private void UpdateInput()
-    {
-        // 1Å°: ¹èÄ¡ ¸ğµå µé¾î°¡±â
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            EnterPlacementMode();
-        }
-        // 2Å°: ¹èÄ¡ ¸ğµå ³ª°¡±â
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ExitPlacementMode();
-        }
-        // ¸¶¿ì½º ¿ŞÂÊ Å¬¸¯: ½ÇÁ¦·Î ¿ÀºêÁ§Æ® ¹èÄ¡
-        else if (Input.GetMouseButtonDown(0))
-        {
-            PlaceObject();
-        }
     }
 
     private void SetValidPreviewState()
@@ -106,40 +132,21 @@ public class ObjectPlacer : MonoBehaviour
         if (_previewObject == null)
             return false;
 
-        return _previewObject.GetComponentInChildren<PreviewObjectValidChecker>() .IsValid;
-
+        return _previewObject.GetComponentInChildren<PreviewObjectValidChecker>().IsValid;
     }
 
     private void PlaceObject()
     {
-        // ¹èÄ¡ ¸ğµå°¡ ¾Æ´Ï°Å³ª, ÇöÀç À§Ä¡°¡ À¯È¿ÇÏÁö ¾ÊÀ¸¸é ¹èÄ¡ X
+        // ë°°ì¹˜ ëª¨ë“œê°€ ì•„ë‹ˆê±°ë‚˜, í˜„ì¬ ìœ„ì¹˜ê°€ ìœ íš¨í•˜ì§€ ì•Šìœ¼ë©´ ë°°ì¹˜ X
         if (!_inPlacementMode || !_validPreviewState)
             return;
 
         Quaternion rotation = Quaternion.Euler(0f, playerCamera.transform.eulerAngles.y, 0f);
-        Instantiate(placeableObjectPrefab, _currentPlacementPosition, rotation, transform);
+        GameObject go = Instantiate(placeableObjectPrefab, _currentPlacementPosition, rotation);
+        go.GetComponent<BoxCollider>().isTrigger = false;
+        OnObjectPlaced?.Invoke();
 
         ExitPlacementMode();
-    }
-
-    private void EnterPlacementMode()
-    {
-        if (_inPlacementMode)
-            return;
-
-        if (playerCamera == null)
-        {
-            Debug.LogWarning("ObjectPlacer: playerCamera°¡ ºñ¾îÀÖ½À´Ï´Ù. ÀÎ½ºÆåÅÍ¿¡¼­ ÁöÁ¤ÇØ ÁÖ¼¼¿ä.");
-            return;
-        }
-
-        Quaternion rotation = Quaternion.Euler(0f, playerCamera.transform.eulerAngles.y, 0f);
-        _previewObject = Instantiate(previewObjectPrefab, _currentPlacementPosition, rotation, transform);
-        _inPlacementMode = true;
-
-        // ÇÊ¿äÇÏ´Ù¸é ¿©±â¼­ Ä¿¼­ Àá±İ ÇØÁ¦ °°Àº °Íµµ °¡´É
-        // Cursor.lockState = CursorLockMode.None;
-        // Cursor.visible = true;
     }
 
     private void ExitPlacementMode()
@@ -149,10 +156,13 @@ public class ObjectPlacer : MonoBehaviour
             Destroy(_previewObject);
         }
 
+        itemData = null;
+        placeableObjectPrefab = null;
+        previewMaterial = null;
         _previewObject = null;
         _inPlacementMode = false;
 
-        // ÇÊ¿äÇÏ´Ù¸é Ä¿¼­ ´Ù½Ã Àá±×±â
+        // í•„ìš”í•˜ë‹¤ë©´ ì»¤ì„œ ë‹¤ì‹œ ì ê·¸ê¸°
         // Cursor.lockState = CursorLockMode.Locked;
         // Cursor.visible = false;
     }

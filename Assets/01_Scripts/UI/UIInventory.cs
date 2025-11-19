@@ -18,10 +18,12 @@ public class UIInventory : MonoBehaviour
     public TextMeshProUGUI selectedItemStatName;
     public TextMeshProUGUI selectedItemStatValue;
     public GameObject useButton;
+    public GameObject craftButton;
     public GameObject equipButton;
     public GameObject unEquipButton;
     public GameObject dropButton;
     public Button useBtn;
+    public Button craftBtn;
     public Button dropBtn;
     public Button equipBtn;
     public Button unEquipBtn;
@@ -30,10 +32,12 @@ public class UIInventory : MonoBehaviour
 
     private PlayerController controller;
     private PlayerCondition condition;
+    private ObjectPlacer objectPlacer;
 
     private void OnEnable()
     {
         useBtn.onClick.AddListener(OnUseButton);
+        craftBtn.onClick.AddListener(OnCraftButton);
         dropBtn.onClick.AddListener(OnDropButton);
         equipBtn.onClick.AddListener(OnEquipButton);
         unEquipBtn.onClick.AddListener(OnUnEquipButton);
@@ -42,6 +46,7 @@ public class UIInventory : MonoBehaviour
     private void OnDisable()
     {
         useBtn.onClick.RemoveAllListeners();
+        craftBtn.onClick.RemoveAllListeners();
         dropBtn.onClick.RemoveAllListeners();
         equipBtn.onClick.RemoveAllListeners();
         unEquipBtn.onClick.RemoveAllListeners();
@@ -52,8 +57,10 @@ public class UIInventory : MonoBehaviour
         controller = CharacterManager.Instance.Player.controller;
         condition = CharacterManager.Instance.Player.condition;
         dropPosition = CharacterManager.Instance.Player.dropPosition;
+        objectPlacer = CharacterManager.Instance.Player.objectPlacer;
 
         controller.inventory += Toggle;
+        objectPlacer.OnObjectPlaced += RemoveSelctedItem;
         CharacterManager.Instance.Player.addItem += AddItem;
 
         inventoryWindow.SetActive(false);
@@ -80,6 +87,7 @@ public class UIInventory : MonoBehaviour
         selectedItemStatValue.text = string.Empty;
 
         useButton.SetActive(false);
+        craftButton.SetActive(false);
         equipButton.SetActive(false);
         unEquipButton.SetActive(false);
         dropButton.SetActive(false);
@@ -102,8 +110,6 @@ public class UIInventory : MonoBehaviour
     {
         return inventoryWindow.activeInHierarchy;
     }
-
-    // PlayerController 먼저 수정
 
     public void AddItem()
     {
@@ -203,6 +209,7 @@ public class UIInventory : MonoBehaviour
         }
 
         useButton.SetActive(selectedItem.item.type == ItemType.Consumable);
+        craftButton.SetActive(selectedItem.item.type == ItemType.Craft);
         equipButton.SetActive(selectedItem.item.type == ItemType.Equipable && !slots[index].equipped);
         unEquipButton.SetActive(selectedItem.item.type == ItemType.Equipable && slots[index].equipped);
         dropButton.SetActive(true);
@@ -224,6 +231,12 @@ public class UIInventory : MonoBehaviour
             }
             RemoveSelctedItem();
         }
+    }
+
+    public void OnCraftButton()
+    {
+        objectPlacer.BuildObject(selectedItem.item);
+        controller.inventory?.Invoke();
     }
 
     public void OnDropButton()
