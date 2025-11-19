@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3844955563027086402}
   - component: {fileID: 3059868416743941767}
   - component: {fileID: 2506648370641226078}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NormalBarrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 5218380605791605175}
   - component: {fileID: 2623032888392497515}
   - component: {fileID: 3024581391174448865}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NormalBarrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}

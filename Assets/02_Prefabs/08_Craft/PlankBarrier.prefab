@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5784613696118629896}
   - component: {fileID: 5597717447498628649}
   - component: {fileID: 2565556233257189200}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: PlankBarrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 6734950888767344935}
   - component: {fileID: 3417686543314837788}
   - component: {fileID: 5199468088936557670}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: PlankBarrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: apple
   description: Yami
-  type: 2
+  type: 1
   icon: {fileID: 21300000, guid: d4b87fa4adc3b064189e130e9f3cd6ab, type: 3}
   dropPrefabs: {fileID: 4320345231468292376, guid: f178297d129b36c45998d64f5290f804, type: 3}
   canStack: 1
@@ -26,3 +26,6 @@ MonoBehaviour:
     value: 25
   crafts: []
   equipPrefab: {fileID: 0}
+  itemName: 
+  itemDescription: 
+  itemIcon: {fileID: 0}
