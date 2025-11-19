@@ -21,10 +21,10 @@ MonoBehaviour:
   maxStackAmout: 12
   cosumables: []
   crafts:
-  - type: 0
-    value: 7
-  - type: 1
-    value: 7
+  - requiredItem: {fileID: 11400000, guid: 29b0998e2fd48474e93a2e966193e563, type: 2}
+    value: 1
+  - requiredItem: {fileID: 11400000, guid: fb05571a7b9ad1f45a1521b4aadd2846, type: 2}
+    value: 1
   equipPrefab: {fileID: 0}
   itemName: 
   itemDescription: 

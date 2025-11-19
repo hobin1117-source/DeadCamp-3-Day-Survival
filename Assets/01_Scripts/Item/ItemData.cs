@@ -31,8 +31,8 @@ public class ItemDataConsumable
 [Serializable]
 public class ItemDataCraft
 {
-    public CraftType type;
-    public float value;
+    public ItemData requiredItem;
+    public int value;
 }
 
 [CreateAssetMenu(fileName = "Item", menuName = "New Item")]
