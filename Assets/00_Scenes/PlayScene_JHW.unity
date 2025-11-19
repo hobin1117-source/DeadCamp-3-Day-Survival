@@ -571,6 +571,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Normal1_Zombie
       objectReference: {fileID: 0}
+    - target: {fileID: 8763368201133084787, guid: cfe38f4be0b2d0f49bc2910c25b820dd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
