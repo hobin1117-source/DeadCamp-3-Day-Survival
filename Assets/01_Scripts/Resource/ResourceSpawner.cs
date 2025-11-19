@@ -69,6 +69,7 @@ public class ResourceSpawner : MonoBehaviour
 
                 Resource resource = go.GetComponent<Resource>();
                 resource.Init(this);
+                resource.spawnIndex = originalSpawnIndex;
 
                 if (pool.Count <= 5)
                     dealy = spawnDleay;
