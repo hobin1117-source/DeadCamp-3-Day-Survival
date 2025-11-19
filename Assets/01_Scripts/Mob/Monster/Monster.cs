@@ -139,10 +139,11 @@ public class Monster : MonoBehaviour, IDamagable
 
     void AttackingUpdate()
     {
-        if (forceChase)
+        if (forceChase) //forceChase가 true인 동안에는 
         {
-            agent.isStopped = false;
-            agent.SetDestination(CharacterManager.Instance.Player.transform.position);
+            agent.isStopped = false; //근접 공격 로직을 제외한 모든 조건을 무시하고
+            agent.SetDestination(CharacterManager.Instance.Player.transform.position); //플레이어를 추격
+            return; //아래 로직 무식
         }
         if (playerDistance < attackDistance && IsPlayerInFieldOfView())
         {
@@ -240,4 +241,15 @@ public class Monster : MonoBehaviour, IDamagable
     {
         agent.isStopped = false;
     }
+
+    // public void ApplyRaycastAttack()
+    // {
+    //     Vector3 origin = transform.position + Vector3.up * 1.5f;
+
+    //     Vector3 direction = transform.forward;
+
+    //     float range = attackDistance;
+
+
+    // } 지피티 작업 계속하면 됨.
 }
