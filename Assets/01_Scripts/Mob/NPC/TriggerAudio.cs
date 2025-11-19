@@ -24,6 +24,19 @@ public class TriggerAudio : MonoBehaviour
     [Tooltip("거리에 따른 볼륨 감소 방식 (선택: Linear, Logarithmic, Custom)")]
     public AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic;
 
+    // 🔹오디오 피크 감지 관련
+    [Header("Dog Animation")]
+    public Animator dogAnimator;
+    public string barkTriggerName = "Bark";
+
+    [Header("Audio Peak Detection")]
+    [Tooltip("이 값보다 볼륨이 클 때를 '짖었다'라고 판단")]
+    public float volumeThreshold = 0.1f;
+    [Tooltip("연속 트리거 최소 간격(초)")]
+    public float minTriggerInterval = 0.25f;
+
+    private float lastTriggerTime = -999f;
+    private float[] samples = new float[1024];  // 오디오 샘플 버퍼
 
     // 게임 시작 시 한 번 호출됩니다.
     void Start()
@@ -33,7 +46,6 @@ public class TriggerAudio : MonoBehaviour
         if (audioSource == null)
         {
             Debug.LogError("AudioSource 컴포넌트가 없습니다! 이 스크립트를 붙인 오브젝트에 AudioSource를 추가해주세요.");
-            // AudioSource가 없으면 다른 기능도 정상 작동 불가하므로 스크립트 비활성화
             enabled = false;
             return;
         }
@@ -44,7 +56,6 @@ public class TriggerAudio : MonoBehaviour
         audioSource.minDistance = audioMinDistance;
         audioSource.maxDistance = audioMaxDistance;
 
-        // 추가적으로, 오디오 클립이 할당되지 않았다면 경고
         if (audioSource.clip == null)
         {
             Debug.LogWarning("AudioSource에 재생할 오디오 클립이 할당되지 않았습니다.");
@@ -64,45 +75,68 @@ public class TriggerAudio : MonoBehaviour
         if (soundWaveParticleSystem != null)
         {
             soundWaveParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            // 파티클 시스템 게임 오브젝트도 비활성화 해두는 것이 일반적 (선택 사항)
-            // soundWaveParticleSystem.gameObject.SetActive(false); 
+        }
+    }
+
+    // 오디오 피크 감지 & 애니메이션/이펙트 트리거
+    private void Update()
+    {
+        // 트리거 안에 몬스터가 없으면 분석 안 함
+        if (detectedObjectsCount <= 0) return;
+        if (audioSource == null || !audioSource.isPlaying) return;
+
+        // 이 AudioSource에서 현재 출력되는 샘플 데이터 가져오기
+        audioSource.GetOutputData(samples, 0);
+
+        // 간단하게 평균 볼륨 계산 (절대값의 평균)
+        float sum = 0f;
+        for (int i = 0; i < samples.Length; i++)
+        {
+            sum += Mathf.Abs(samples[i]);
+        }
+        float avgVolume = sum / samples.Length;
+
+        // 볼륨이 threshold 이상이고, 최소 간격이 지났다면 "짖었다"라고 판단
+        if (avgVolume > volumeThreshold && Time.time - lastTriggerTime > minTriggerInterval)
+        {
+            lastTriggerTime = Time.time;
+
+            // 애니메이션 트리거
+            if (dogAnimator != null && !string.IsNullOrEmpty(barkTriggerName))
+            {
+                dogAnimator.SetTrigger(barkTriggerName);
+            }
+
+            // 이펙트 한 번 터뜨리기
+            if (soundWaveParticleSystem != null)
+            {
+                soundWaveParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                soundWaveParticleSystem.Play();
+            }
         }
     }
 
     // 다른 콜라이더가 이 트리거 안으로 들어왔을 때 호출됩니다.
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("트리거에 감지 되었습니다: " + other.gameObject.name);
+        //Debug.Log("트리거에 감지 되었습니다: " + other.gameObject.name);
 
         if (((1 << other.gameObject.layer) & detectionLayers) != 0)
         {
-            // 감지된 오브젝트 수를 증가시키고, 처음 감지된 경우에만 재생!
             detectedObjectsCount++;
-            Debug.Log($"플레이어 또는 몬스터 감지되었습니다: {other.gameObject.name} (현재 {detectedObjectsCount}개)");
+            //Debug.Log($"플레이어 또는 몬스터 감지되었습니다: {other.gameObject.name} (현재 {detectedObjectsCount}개)");
 
-            // 이 오브젝트가 첫 번째로 감지된 오브젝트라면 오디오와 파티클을 재생!
+            // 첫 번째로 감지된 오브젝트라면 오디오 재생 시작
             if (detectedObjectsCount == 1)
             {
-                if (audioSource != null && audioSource.clip != null) // 오디오 클립이 있는지 추가 확인
+                if (audioSource != null && audioSource.clip != null)
                 {
                     audioSource.Play();
-                    Debug.Log("오디오 활성화 및 재생 시작!");
+                    //Debug.Log("오디오 활성화 및 재생 시작!");
                 }
-                else if (audioSource == null) // AudioSource 자체가 없으면 로그 남기고 아무것도 안 함
+                else if (audioSource == null)
                 {
-                    Debug.LogWarning("AudioSource가 없어 오디오를 재생할 수 없습니다.");
-                }
-
-                if (soundWaveParticleSystem != null)
-                {
-                    // 파티클 오브젝트가 비활성화되어 있었다면 활성화
-                    if (!soundWaveParticleSystem.gameObject.activeInHierarchy)
-                    {
-                        soundWaveParticleSystem.gameObject.SetActive(true);
-                    }
-                    soundWaveParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-                    soundWaveParticleSystem.Play();
-                    Debug.Log("사운드 웨이브 파티클 시스템 재생 시작!");
+                    //Debug.LogWarning("AudioSource가 없어 오디오를 재생할 수 없습니다.");
                 }
             }
         }
@@ -113,27 +147,23 @@ public class TriggerAudio : MonoBehaviour
     {
         if (((1 << other.gameObject.layer) & detectionLayers) != 0)
         {
-            // 감지된 오브젝트 수를 감소시키고, 마지막 오브젝트가 나가는 경우 정지!
             detectedObjectsCount--;
-            // 음수 방지 (안전 장치)
             if (detectedObjectsCount < 0) detectedObjectsCount = 0;
-            Debug.Log($"플레이어 또는 몬스터 나갔습니다: {other.gameObject.name} (남은 개수: {detectedObjectsCount})");
+            //Debug.Log($"플레이어 또는 몬스터 나갔습니다: {other.gameObject.name} (남은 개수: {detectedObjectsCount})");
 
-            // 모든 감지 대상이 트리거 밖으로 나갔다면 오디오와 파티클 정지!
             if (detectedObjectsCount == 0)
             {
                 if (audioSource != null && audioSource.isPlaying)
                 {
                     audioSource.Stop();
-                    Debug.Log("모든 감지 대상 나감. 오디오 정지!");
+                    //Debug.Log("모든 감지 대상 나감. 오디오 정지!");
                 }
 
+                // 몬스터가 다 나가면 이펙트도 멈춤
                 if (soundWaveParticleSystem != null && soundWaveParticleSystem.isPlaying)
                 {
                     soundWaveParticleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-                    Debug.Log("모든 감지 대상 나감. 파티클 시스템 정지!");
-                    // 파티클 시스템이 재생을 멈춘 후 바로 오브젝트 비활성화 (선택 사항)
-                    // soundWaveParticleSystem.gameObject.SetActive(false);
+                    //Debug.Log("모든 감지 대상 나감. 파티클 시스템 정지!");
                 }
             }
         }
