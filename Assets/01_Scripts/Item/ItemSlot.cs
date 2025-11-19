@@ -2,8 +2,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum SlotType
+{
+    Inventory,
+    Craft
+}
+
 public class ItemSlot : MonoBehaviour
 {
+    public SlotType slotType;
+
     public ItemData item;
 
     public UIInventory inventory;
@@ -24,7 +32,15 @@ public class ItemSlot : MonoBehaviour
 
     private void OnEnable()
     {
-        button.onClick.AddListener(OnClickButton);
+        switch (slotType)
+        {
+            case SlotType.Inventory:
+                button.onClick.AddListener(OnClickButton);
+                break;
+            case SlotType.Craft:
+                button.onClick.AddListener(OnClickCraftButton);
+                break;
+        }
         outline.enabled = equipped;
     }
 
