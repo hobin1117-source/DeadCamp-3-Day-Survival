@@ -114,7 +114,7 @@ public class UICraft : MonoBehaviour
 
         for (int i = 0; i < selectedItem.item.crafts.Length; i++)
         {
-            selectedItemResourceName.text += selectedItem.item.crafts[i].type.ToString() + "\n";
+            selectedItemResourceName.text += selectedItem.item.crafts[i].requiredItem.displayName + "\n";
             selectedItemResourceValue.text += selectedItem.item.crafts[i].value.ToString() + "\n";
         }
 
@@ -123,10 +123,46 @@ public class UICraft : MonoBehaviour
 
     public void OnCraftButton()
     {
-        // 인벤토리에 재료 있는지 확인
-        // 없으면 return
-        inventory.AddItem();// 있으면 재료 소모하고 인벤토리에 아이템 추가
+        if (selectedItem == null || selectedItem.item == null)
+            return;
+
+        ItemData itemToCraft = selectedItem.item;
+
+        bool hasAllResources = true;
+
+        // 재료가 충분한지 확인
+        for (int i = 0; i < itemToCraft.crafts.Length; i++)
+        {
+            ItemData resourceItem = itemToCraft.crafts[i].requiredItem;
+            int resourceValue = itemToCraft.crafts[i].value;         
+
+            if (resourceItem == null || !inventory.HasItem(resourceItem, resourceValue))
+            {
+                hasAllResources = false;
+                break;
+            }
+        }
+
+        if (!hasAllResources)
+        {
+            Debug.Log("제작에 필요한 재료가 부족합니다: " + itemToCraft.displayName);
+            return;
+        }
+
+        // 재료 소모
+        for (int i = 0; i < itemToCraft.crafts.Length; i++)
+        {
+            ItemData resourceItem = itemToCraft.crafts[i].requiredItem;
+            int resourceValue = itemToCraft.crafts[i].value;
+
+            inventory.RemoveItem(resourceItem, resourceValue);
+        }
+
+        // 인벤토리에 아이템 추가
+        CharacterManager.Instance.Player.itemData = itemToCraft;
+        inventory.AddItem();
 
         UpdateUI();
+        ClearSelectedItemWindow();
     }
 }
