@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,9 @@ public class DayAlertManager : MonoBehaviour
     [Header("알림 UI")]
     public TextMeshProUGUI alerText;
     public float alertDuration = 3f;
+
+    [Header("시계 UI")]
+    public TextMeshProUGUI clockText;
 
     private bool noticed18 = false;
     private bool noticed21 = false;
@@ -33,6 +37,8 @@ public class DayAlertManager : MonoBehaviour
     void Update()
     {
         float hour = day.time * 24f;
+
+        UpdateClock(hour);
 
         if (!noticed18 && previousHour < 18f && hour >= 18f)
         {
@@ -63,6 +69,18 @@ public class DayAlertManager : MonoBehaviour
         }
 
         previousHour = hour;
+    }
+
+    private void UpdateClock(float hour)
+    {
+        int h = Mathf.FloorToInt(hour);
+
+        float minuteFloat = (hour - h) * 60;
+        int m = Mathf.FloorToInt(minuteFloat);
+
+        int displayMinute = (m / 10) * 10;
+
+        clockText.text = $"{h:00}:{displayMinute:00}";
     }
 
     private void ShowAlert(string message)
