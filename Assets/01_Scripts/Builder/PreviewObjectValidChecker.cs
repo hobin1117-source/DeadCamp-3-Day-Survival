@@ -1,22 +1,21 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PreviewObjectValidChecker : MonoBehaviour
 {
-    [SerializeField] private LayerMask invalidLayers; // °ãÄ¡¸é ¾È µÇ´Â ·¹ÀÌ¾îµé
+    [SerializeField] private LayerMask invalidLayers; // ê²¹ì¹˜ë©´ ì•ˆ ë˜ëŠ” ë ˆì´ì–´ë“¤
     public bool IsValid { get; private set; } = true;
 
-    // Inspector¿¡¼­ º¼ ÇÊ¿ä ¾øÀ¸´Ï±î SerializeField Á¦°Å
+    // Inspectorì—ì„œ ë³¼ í•„ìš” ì—†ìœ¼ë‹ˆê¹Œ SerializeField ì œê±°
     private HashSet<Collider> _collidingObjects = new HashSet<Collider>();
 
     private void OnTriggerEnter(Collider other)
     {
-        
-        // otherÀÇ ·¹ÀÌ¾î°¡ invalidLayers¿¡ Æ÷ÇÔµÇ¾î ÀÖÀ¸¸é
+        // otherì˜ ë ˆì´ì–´ê°€ invalidLayersì— í¬í•¨ë˜ì–´ ìˆìœ¼ë©´
         if (((1 << other.gameObject.layer) & invalidLayers) != 0)
         {
-            Debug.Log(other.gameObject.name + "¿Í(°ú) Ãæµ¹ÇÔ.");
+            Debug.Log(other.gameObject.name + "ì™€(ê³¼) ì¶©ëŒí•¨.");
             _collidingObjects.Add(other);
             IsValid = false;
         }
@@ -27,7 +26,7 @@ public class PreviewObjectValidChecker : MonoBehaviour
         if (((1 << other.gameObject.layer) & invalidLayers) != 0)
         {
             _collidingObjects.Remove(other);
-            IsValid = _collidingObjects.Count <= 0; // ´õ ÀÌ»ó °ãÄ¡´Â °Ô ¾øÀ¸¸é ´Ù½Ã true
+            IsValid = _collidingObjects.Count <= 0; // ë” ì´ìƒ ê²¹ì¹˜ëŠ” ê²Œ ì—†ìœ¼ë©´ ë‹¤ì‹œ true
         }
     }
 }

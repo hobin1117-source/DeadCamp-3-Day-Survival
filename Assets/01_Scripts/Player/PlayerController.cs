@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        inventory += ToggleCursor;
     }
 
     void FixedUpdate()
@@ -114,7 +115,6 @@ public class PlayerController : MonoBehaviour
         if (callbackContext.phase == InputActionPhase.Started)
         {
             inventory?.Invoke();
-            ToggleCursor();
         }
     }
 
@@ -123,7 +123,6 @@ public class PlayerController : MonoBehaviour
         if (callbackContext.phase == InputActionPhase.Started)
         {
             builder?.Invoke();
-            ToggleCursor();
         }
     }
 
