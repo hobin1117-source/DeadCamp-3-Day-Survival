@@ -1140,7 +1140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  slotType: 1
+  item: {fileID: 11400000, guid: 16e39a3c39bf4b8468ef9c951d4e1ec3, type: 2}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
   button: {fileID: 2899543028468241806}
@@ -1303,7 +1304,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &449448974618082588
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1320,10 +1321,10 @@ RectTransform:
   - {fileID: 5051838422261255787}
   m_Father: {fileID: 2451392413778772782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 600, y: -195}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1989648705342742531
 CanvasRenderer:
@@ -1434,6 +1435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 1
   item: {fileID: 0}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
@@ -1633,7 +1635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9015250600735950838
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1650,10 +1652,10 @@ RectTransform:
   - {fileID: 8385560932101806253}
   m_Father: {fileID: 2451392413778772782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 60, y: -195}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &518960226064790690
 CanvasRenderer:
@@ -1764,6 +1766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 1
   item: {fileID: 0}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
@@ -2116,7 +2119,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 24, y: -24}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6225851055322079233
 CanvasRenderer:
@@ -2899,7 +2902,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  slotType: 1
+  item: {fileID: 11400000, guid: 95e5ec028f9ff244a9e27e9ea7d62633, type: 2}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
   button: {fileID: 1973139816414832292}
@@ -3137,7 +3141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &161812521042599
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3154,10 +3158,10 @@ RectTransform:
   - {fileID: 1076259848083312632}
   m_Father: {fileID: 2451392413778772782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 600, y: -60}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4907896975174251103
 CanvasRenderer:
@@ -3268,6 +3272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 1
   item: {fileID: 0}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
@@ -3428,6 +3433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -3709,6 +3715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -3843,7 +3850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4604411291190300323
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3860,10 +3867,10 @@ RectTransform:
   - {fileID: 6445875557513029238}
   m_Father: {fileID: 2451392413778772782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 870, y: -60}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2270622477033358279
 CanvasRenderer:
@@ -3974,6 +3981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 1
   item: {fileID: 0}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
@@ -4482,7 +4490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3300538082208246441
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4499,10 +4507,10 @@ RectTransform:
   - {fileID: 1641504665966981489}
   m_Father: {fileID: 2451392413778772782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 735, y: -195}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8521596624893940818
 CanvasRenderer:
@@ -4613,6 +4621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 1
   item: {fileID: 0}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
@@ -5336,7 +5345,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &798064641040468146
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5353,10 +5362,10 @@ RectTransform:
   - {fileID: 8337128600695590330}
   m_Father: {fileID: 2451392413778772782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 870, y: -195}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6415425844538856743
 CanvasRenderer:
@@ -5467,6 +5476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 1
   item: {fileID: 0}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
@@ -5910,6 +5920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -6070,6 +6081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -6219,7 +6231,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b53822ec75d701e49b9947d1d09fd81e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6940,6 +6952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -7417,7 +7430,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 24, y: -84}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &2842266637515308609
 CanvasRenderer:
@@ -8087,6 +8100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -8322,6 +8336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -8766,6 +8781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -8795,7 +8811,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1063020218287487713
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8812,10 +8828,10 @@ RectTransform:
   - {fileID: 8822301470113110618}
   m_Father: {fileID: 2451392413778772782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 195, y: -195}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3257128915987301581
 CanvasRenderer:
@@ -8926,6 +8942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 1
   item: {fileID: 0}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
@@ -9164,7 +9181,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9008834229794786538
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9181,10 +9198,10 @@ RectTransform:
   - {fileID: 4674505991523143984}
   m_Father: {fileID: 2451392413778772782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 465, y: -195}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3522029282541781849
 CanvasRenderer:
@@ -9295,6 +9312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 1
   item: {fileID: 0}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
@@ -9455,6 +9473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -10130,7 +10149,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b53822ec75d701e49b9947d1d09fd81e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10997,6 +11016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -11157,6 +11177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -11752,6 +11773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -11990,7 +12012,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5790996496396688867
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12007,10 +12029,10 @@ RectTransform:
   - {fileID: 4453778312235979695}
   m_Father: {fileID: 2451392413778772782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 735, y: -60}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3638026194524275489
 CanvasRenderer:
@@ -12121,6 +12143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 1
   item: {fileID: 0}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
@@ -12977,7 +13000,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b53822ec75d701e49b9947d1d09fd81e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13007,7 +13030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2099837036446979055
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13024,10 +13047,10 @@ RectTransform:
   - {fileID: 8221492419117064314}
   m_Father: {fileID: 2451392413778772782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 330, y: -195}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1395788212811418881
 CanvasRenderer:
@@ -13138,6 +13161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 1
   item: {fileID: 0}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
@@ -13773,7 +13797,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  slotType: 1
+  item: {fileID: 11400000, guid: 303fe622de442f8498059b4bdc300bf9, type: 2}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
   button: {fileID: 4949941927499375249}
@@ -13933,6 +13958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
@@ -14096,7 +14122,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1762776041433734792
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14113,10 +14139,10 @@ RectTransform:
   - {fileID: 2246117765320234294}
   m_Father: {fileID: 2451392413778772782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 465, y: -60}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &970594373764842058
 CanvasRenderer:
@@ -14227,6 +14253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 1
   item: {fileID: 0}
   inventory: {fileID: 0}
   craft: {fileID: 8994455468753572880}
@@ -14387,6 +14414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64944ce24a07b1c4cb8209c63b4145d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotType: 0
   item: {fileID: 0}
   inventory: {fileID: 1853810521164438279}
   craft: {fileID: 0}
