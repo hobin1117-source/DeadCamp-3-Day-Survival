@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5303131362184322409}
   - component: {fileID: 3747460942804576673}
   - component: {fileID: 7790791883422775951}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: WireBarrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8101607951901803693}
   - component: {fileID: 928867816119509754}
   - component: {fileID: 8863064528236871396}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: WireBarrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}

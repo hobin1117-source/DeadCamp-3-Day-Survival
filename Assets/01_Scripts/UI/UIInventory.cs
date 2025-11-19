@@ -267,6 +267,30 @@ public class UIInventory : MonoBehaviour
         return total >= quantity;
     }
 
+    public void RemoveItem(ItemData item, int quantity)
+    {
+        // 인벤토리 슬롯을 돌며 아이템을 제거
+        for (int i = 0; i < slots.Length && quantity > 0; i++)
+        {
+            if (slots[i].item == item)
+            {
+                int amountToRemove = Mathf.Min(slots[i].quantity, quantity);
+
+                slots[i].quantity -= amountToRemove;
+                quantity -= amountToRemove;
+
+                // quantity가 0이 되면 슬롯을 비움
+                if (slots[i].quantity <= 0)
+                {
+                    slots[i].item = null;
+                    slots[i].Clear();
+                }
+            }
+        }
+
+        UpdateUI();
+    }
+
     public void OnEquipButton()
     {
         if (slots[curEquipIndex].equipped)
