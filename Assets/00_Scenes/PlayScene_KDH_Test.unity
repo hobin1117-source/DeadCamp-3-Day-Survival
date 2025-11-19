@@ -26,13 +26,13 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: ff33af19770dd3e489f9c65e388009fe, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: c8af2c35329088149850c3e84d1e2027, type: 2}
   m_HaloStrength: 1
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 1
+  m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
@@ -241,7 +241,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6592458862164998266, guid: b4b7339fb3082864b8444ec917d80cf4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 338274487}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4b7339fb3082864b8444ec917d80cf4, type: 3}
 --- !u!1 &96096443
@@ -254,6 +257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 96096445}
   - component: {fileID: 96096444}
+  - component: {fileID: 96096446}
   m_Layer: 0
   m_Name: DayAndNight
   m_TagString: Untagged
@@ -498,6 +502,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  skyBlendDuration: 5
 --- !u!4 &96096445
 Transform:
   m_ObjectHideFlags: 0
@@ -515,6 +520,24 @@ Transform:
   - {fileID: 864391502}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &96096446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96096443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ca2283205c2efd48b8e764c53630a09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  day: {fileID: 96096444}
+  night: {fileID: 8900000, guid: 227c85e829eb9d24180fd08987aac3fe, type: 3}
+  sunrise: {fileID: 8900000, guid: f405b1a2b0be88747bd87bbf07609cae, type: 3}
+  daySky: {fileID: 8900000, guid: 84ea38d7dfc45ea40a4c3d83acfd7752, type: 3}
+  sunset: {fileID: 8900000, guid: d179e65e9b0f8594f9f077e33cee486d, type: 3}
+  blendSharpness: 1
 --- !u!1 &236767973
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,8 +653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   day: {fileID: 96096444}
   dayCount: 0
-  largeZone: {fileID: 1712643870}
-  safeZone: {fileID: 577718227}
+  spawnPoints: []
   waves:
   - monsters:
     - prefabs: {fileID: 8763368201133084787, guid: cfe38f4be0b2d0f49bc2910c25b820dd, type: 3}
@@ -646,7 +668,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1563062273}
     m_Modifications:
     - target: {fileID: 1123518830994095814, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_Name
@@ -658,31 +680,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8549333914251562236, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.5242786
+      value: 4.0577526
       objectReference: {fileID: 0}
     - target: {fileID: 8549333914251562236, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.55
+      value: 1.206824
       objectReference: {fileID: 0}
     - target: {fileID: 8549333914251562236, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.9814565
+      value: -17.859308
       objectReference: {fileID: 0}
     - target: {fileID: 8549333914251562236, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.94231385
+      value: 0.8972058
       objectReference: {fileID: 0}
     - target: {fileID: 8549333914251562236, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.006058475
       objectReference: {fileID: 0}
     - target: {fileID: 8549333914251562236, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.33473065
+      value: 0.4413993
       objectReference: {fileID: 0}
     - target: {fileID: 8549333914251562236, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.012314696
       objectReference: {fileID: 0}
     - target: {fileID: 8549333914251562236, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -735,6 +757,11 @@ Transform:
   - {fileID: 1446358433}
   m_Father: {fileID: 1777442159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &338274487 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8549333914251562236, guid: c411931b09a9aa644b50777c5cac4aab, type: 3}
+  m_PrefabInstance: {fileID: 258395398}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &379151429
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,7 +2002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &954097589
 Transform:
   m_ObjectHideFlags: 0
@@ -2122,6 +2149,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 315779642}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1563062273 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6592458862164998266, guid: b4b7339fb3082864b8444ec917d80cf4, type: 3}
+  m_PrefabInstance: {fileID: 77405530}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1643314442 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7209272532398334342, guid: 90e4e970aaadd524fbaae61affe6221d, type: 3}
@@ -2415,6 +2447,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1100158963122785601, guid: ed4b0534bb3a20a438c6c0799935e482, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 15871
+      objectReference: {fileID: 0}
     - target: {fileID: 2254727855610972189, guid: ed4b0534bb3a20a438c6c0799935e482, type: 3}
       propertyPath: m_Name
       value: Player_PSH
@@ -3460,5 +3496,4 @@ SceneRoots:
   - {fileID: 77405530}
   - {fileID: 963550518}
   - {fileID: 39484103}
-  - {fileID: 258395398}
   - {fileID: 954097589}
