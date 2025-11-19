@@ -491,6 +491,7 @@ MonoBehaviour:
   runSpeed: 3
   dropOnDeath:
   - {fileID: 11400000, guid: d611b682ef20132489f723675d795eb7, type: 2}
+  hitVFX: {fileID: 0}
   detectDistance: 5
   minWanderDistance: 5
   maxWanderDistance: 10
@@ -498,9 +499,11 @@ MonoBehaviour:
   maxWanderWaitTime: 5
   damage: 0
   attackRate: 0
+  attackAngle: 90
   lastAttackTime: 0
   attackDistance: 0
   fieldOfView: 60
+  forceChase: 0
 --- !u!65 &8593296297022854195
 BoxCollider:
   m_ObjectHideFlags: 0
