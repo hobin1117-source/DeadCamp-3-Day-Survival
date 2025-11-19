@@ -57,10 +57,10 @@ public class UIInventory : MonoBehaviour
         controller = CharacterManager.Instance.Player.controller;
         condition = CharacterManager.Instance.Player.condition;
         dropPosition = CharacterManager.Instance.Player.dropPosition;
-
-        objectPlacer = FindAnyObjectByType<ObjectPlacer>();
+        objectPlacer = CharacterManager.Instance.Player.objectPlacer;
 
         controller.inventory += Toggle;
+        objectPlacer.OnObjectPlaced += RemoveSelctedItem;
         CharacterManager.Instance.Player.addItem += AddItem;
 
         inventoryWindow.SetActive(false);
