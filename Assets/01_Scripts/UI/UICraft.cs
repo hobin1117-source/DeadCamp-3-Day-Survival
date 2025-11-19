@@ -49,7 +49,7 @@ public class UICraft : MonoBehaviour
             slots[i] = slotPanel.GetChild(i).GetComponent<ItemSlot>();
             slots[i].index = i;
             slots[i].craft = this;
-            slots[i].Clear();
+            //slots[i].Clear();
         }
 
         ClearSelectedItemWindow();
@@ -114,8 +114,8 @@ public class UICraft : MonoBehaviour
 
         for (int i = 0; i < selectedItem.item.crafts.Length; i++)
         {
-            selectedItemResourceName.text += selectedItem.item.cosumables[i].type.ToString() + "\n";
-            selectedItemResourceValue.text += selectedItem.item.cosumables[i].value.ToString() + "\n";
+            selectedItemResourceName.text += selectedItem.item.crafts[i].type.ToString() + "\n";
+            selectedItemResourceValue.text += selectedItem.item.crafts[i].value.ToString() + "\n";
         }
 
         craftButton.SetActive(true);
