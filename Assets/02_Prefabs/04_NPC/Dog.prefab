@@ -26,7 +26,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000030908623, y: 0.7071068, z: 0.7071067, w: 0.000000030908616}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.3701384, y: 2.3701384, z: 2.3701384}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 927467246153075581}
@@ -269,7 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2032426135410088590}
   - component: {fileID: 7739315140504002890}
-  - component: {fileID: 2558264621114831882}
+  - component: {fileID: 1118320726062723947}
   m_Layer: 0
   m_Name: Dog_mesh
   m_TagString: Untagged
@@ -373,8 +373,8 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.025961667, y: 0.1855681, z: 0.06411722}
     m_Extent: {x: 0.30649397, y: 0.40514195, z: 0.46845075}
   m_DirtyAABB: 0
---- !u!64 &2558264621114831882
-MeshCollider:
+--- !u!65 &1118320726062723947
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -391,10 +391,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 9120475136174515691, guid: 2ba7251c7d20f6c41af1eb03936d139c, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 7.839385, y: 14.32175, z: 12.395186}
+  m_Center: {x: -0.39600542, y: 7.0155683, z: 1.541563}
 --- !u!1 &1283062348672464866
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,7 +486,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.9961947, z: -0.08715578, w: 0}
   m_LocalPosition: {x: 0, y: 0.53, z: 0.394}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 6.6794996, y: 6.6794996, z: 6.6794996}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 938191858049395304}
@@ -500,14 +499,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1984511214465506719}
   serializedVersion: 8
-  lengthInSec: 2
-  simulationSpeed: 1
+  lengthInSec: 1
+  simulationSpeed: 2
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -628,7 +627,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -2
+      scalar: -3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1011,7 +1010,7 @@ ParticleSystem:
     startRotation:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.34906584
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1061,9 +1060,9 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    randomizeRotationDirection: 1
+    randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 2
+    maxNumParticles: 1
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -1329,7 +1328,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 6
+      scalar: 2
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5375,9 +5374,10 @@ GameObject:
   m_Component:
   - component: {fileID: 938191858049395304}
   - component: {fileID: 5019139802238768438}
-  - component: {fileID: 1896670125550521254}
+  - component: {fileID: 7696310523676975013}
   - component: {fileID: 6367528541755810208}
   - component: {fileID: 6072488910887838888}
+  - component: {fileID: 8571773112682199650}
   m_Layer: 0
   m_Name: Dog
   m_TagString: Untagged
@@ -5422,8 +5422,12 @@ MonoBehaviour:
   audioMinDistance: 100
   audioMaxDistance: 300
   rolloffMode: 1
---- !u!136 &1896670125550521254
-CapsuleCollider:
+  dogAnimator: {fileID: 8571773112682199650}
+  barkTriggerName: Bark
+  volumeThreshold: 0.15
+  minTriggerInterval: 0.3
+--- !u!135 &7696310523676975013
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5440,11 +5444,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 20
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Radius: 18.254633
+  m_Center: {x: -0.90730286, y: 0, z: 6.6460667}
 --- !u!82 &6367528541755810208
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5564,10 +5566,31 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!95 &8571773112682199650
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412030409988943867}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e3f51c87c92d309489cfcdbcfad15da6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2845817314798045102
 GameObject:
   m_ObjectHideFlags: 0

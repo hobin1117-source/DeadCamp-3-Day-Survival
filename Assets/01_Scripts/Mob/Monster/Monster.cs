@@ -33,6 +33,8 @@ public class Monster : MonoBehaviour, IDamagable
     public int damage;
     public float attackRate;
 
+    public float attackAngle = 90f;
+
     public float lastAttackTime;
     public float attackDistance;
 
@@ -139,10 +141,11 @@ public class Monster : MonoBehaviour, IDamagable
 
     void AttackingUpdate()
     {
-        if (forceChase)
+        if (forceChase) //forceChase가 true인 동안에는 
         {
-            agent.isStopped = false;
-            agent.SetDestination(CharacterManager.Instance.Player.transform.position);
+            agent.isStopped = false; //근접 공격 로직을 제외한 모든 조건을 무시하고
+            agent.SetDestination(CharacterManager.Instance.Player.transform.position); //플레이어를 추격
+            return; //아래 로직 무식
         }
         if (playerDistance < attackDistance && IsPlayerInFieldOfView())
         {
@@ -158,10 +161,8 @@ public class Monster : MonoBehaviour, IDamagable
         {
             if (playerDistance < detectDistance)
             {
-                //agent.isStopped = false;
-                NavMeshPath path = new NavMeshPath();
 
-                if (agent.CalculatePath(CharacterManager.Instance.Player.transform.position, path))
+                if (agent.CalculatePath(CharacterManager.Instance.Player.transform.position, new NavMeshPath()))
                 {
                     agent.SetDestination(CharacterManager.Instance.Player.transform.position);
                 }
@@ -229,15 +230,24 @@ public class Monster : MonoBehaviour, IDamagable
         Destroy(gameObject);
     }
 
-    public void ApplyAttackDamage()
-    {
-        CharacterManager.Instance.Player.controller
-            .GetComponent<IDamagable>()
-            .TakePhysicalDamage(damage);
-    }
-
     public void StopMoving()
     {
         agent.isStopped = false;
+    }
+
+    public void ApplyConeAttack()
+    {
+        Transform player = CharacterManager.Instance.Player.transform;
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        if (distance > attackDistance) return; //부채꼴 거리? 공격 사거리 밖에 있으면 함수 종료
+
+        Vector3 toPlayer = (player.position - transform.position).normalized;
+        float angle = Vector3.Angle(transform.forward, toPlayer);
+        if (angle > attackAngle * 0.5f) return; //부채꼴 각도 밖에 있으면 함수 종료
+
+        IDamagable dmg = player.GetComponentInParent<IDamagable>();
+        if (dmg != null)
+            dmg.TakePhysicalDamage(damage);
     }
 }
