@@ -10,8 +10,8 @@ public class PauseMenuManager : MonoBehaviour
     [Header("UI")]
     public GameObject pauseMenuPanel; // 인스펙터에 할당 권장
     public GameObject settingsPanel; // Settings 창 (Panel)
-    public Toggle musicToggle;       // 예: 설정 항목들
-    public Slider volumeSlider;
+    //public Toggle musicToggle;       // 예: 설정 항목들
+    //public Slider volumeSlider;
 
     [Header("Scene Settings")]
     public string mainMenuSceneName = "MainMenu"; // 인스펙터에서 메인 메뉴 씬 이름 지정
@@ -23,8 +23,8 @@ public class PauseMenuManager : MonoBehaviour
     {
         // 초기값 불러오기
         if (settingsPanel != null) settingsPanel.SetActive(false);
-        if (musicToggle != null) musicToggle.isOn = PlayerPrefs.GetInt("MusicOn", 1) == 1;
-        if (volumeSlider != null) volumeSlider.value = PlayerPrefs.GetFloat("Volume", 1f);
+      //if (musicToggle != null) musicToggle.isOn = PlayerPrefs.GetInt("MusicOn", 1) == 1;
+      // if (volumeSlider != null) volumeSlider.value = PlayerPrefs.GetFloat("Volume", 1f);
 
         // 시작 시 UI 상태 초기화 (null 체크 포함)
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
@@ -82,6 +82,24 @@ public class PauseMenuManager : MonoBehaviour
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(true);
     }
 
+
+    private void Awake()
+    {
+        // 씬 로드 콜백 등록
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 씬이 바뀔 때 이 오브젝트가 DontDestroyOnLoad 씬에 있다면 파괴한다.
+        // (또는 특정 씬으로 넘어갔을 때만 파괴하도록 조건 추가 가능)
+        //Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
     // 재시작 버튼 연결
     public void Restart()
     {
@@ -98,21 +116,8 @@ public class PauseMenuManager : MonoBehaviour
             Scene current = SceneManager.GetActiveScene();
             SceneManager.LoadScene(current.name);
         }
-    ;
     }
-
-    // 새 카메라의 AudioListener를 활성화하고, 이전 것은 비활성화
-    void SwitchAudioListener(Camera newCam)
-    {
-        // 이전 활성 리스너 모두 비활성화
-        foreach (var l in FindObjectsOfType<AudioListener>())
-        {
-            l.enabled = false;
-        }
-        var listener = newCam.GetComponent<AudioListener>();
-        if (listener != null) listener.enabled = true;
-
-    }
+    
 
     // 설정 열기 버튼 연결
     public void Settings()
