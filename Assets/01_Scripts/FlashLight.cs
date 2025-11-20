@@ -1,34 +1,34 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FlashLight : MonoBehaviour
 {
-    bool PlayerGetLight; //trueÀÏ °æ¿ì ¼ÕÀüµîon
-    Light myLight; //light ÄÄÆ÷³ÍÆ®¸¦ ´ã´Â º¯¼ö
+    bool PlayerGetLight; //trueì¼ ê²½ìš° ì†ì „ë“±on
+    Light myLight; //light ì»´í¬ë„ŒíŠ¸ë¥¼ ë‹´ëŠ” ë³€ìˆ˜
 
     void Start()
     {
-        PlayerGetLight = false; //ÃÊ±â¿¡´Â ¼ÕÀüµîÀÇ ºÒºûÀÌ ²¨Áø »óÅÂ
-        myLight = this.GetComponent<Light>(); //¿ÀºêÁ§Æ®°¡ °¡Áø light ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿È.
+        PlayerGetLight = false; //ì´ˆê¸°ì—ëŠ” ì†ì „ë“±ì˜ ë¶ˆë¹›ì´ êº¼ì§„ ìƒíƒœ
+        myLight = this.GetComponent<Light>(); //ì˜¤ë¸Œì íŠ¸ê°€ ê°€ì§„ light ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜´.
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            PlayerGetLight = PlayerGetLight ? false : true; //rÅ°¸¦ ´­·¯ ¼ÕÀüµîÀÇ ºÒºûÀ» on/off
+            PlayerGetLight = PlayerGetLight ? false : true; //rí‚¤ë¥¼ ëˆŒëŸ¬ ì†ì „ë“±ì˜ ë¶ˆë¹›ì„ on/off
         }
 
         if (PlayerGetLight == false)
         {
-            myLight.intensity = 0; //¼ÕÀüµî off
+            myLight.intensity = 0; //ì†ì „ë“± off
         }
 
 
         if (PlayerGetLight == true)
         {
-            myLight.intensity = 10; //¼ÕÀüµî on
+            myLight.intensity = 3; //ì†ì „ë“± on
         }
 
     }

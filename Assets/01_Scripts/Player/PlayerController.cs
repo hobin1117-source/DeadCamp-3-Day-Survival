@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        if (GameManager.Instance == null || GameManager.Instance.IsSettingOpen)
+            return;
         Cursor.lockState = CursorLockMode.Locked;
         inventory += ToggleCursor;
     }
@@ -114,6 +116,8 @@ public class PlayerController : MonoBehaviour
     {
         if (callbackContext.phase == InputActionPhase.Started)
         {
+            if (GameManager.Instance != null && GameManager.Instance.IsSettingOpen)
+                return;
             inventory?.Invoke();
         }
     }
@@ -128,8 +132,25 @@ public class PlayerController : MonoBehaviour
 
     void ToggleCursor()
     {
-        bool toggle = Cursor.lockState == CursorLockMode.Locked;
-        Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
-        canLook = !toggle;
+        // ESC 설정창이 떠 있을 땐 인벤토리 토글 무시
+        if (GameManager.Instance != null && GameManager.Instance.IsSettingOpen)
+            return;
+
+        bool isLocked = Cursor.lockState == CursorLockMode.Locked;
+
+        if (isLocked)
+        {
+            // ▶ 인벤토리 열림 상태 : 커서 보이게 + 카메라 회전 끔
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            canLook = false;
+        }
+        else
+        {
+            // ▶ 인벤토리 닫힘 상태 : 커서 숨기고 + 다시 카메라 회전 켬
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            canLook = true;
+        }
     }
 }

@@ -1,94 +1,39 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    [Header("--- Settings ---")]
-    [Range(0f, 1f)] public float masterVolume = 1f;
-    [Range(0f, 1f)] public float bgmVolume = 1f;
-    [Range(0f, 1f)] public float sfxVolume = 1f;
+    [Header("Main Mixer")]
+    public AudioMixer mainMixer;   // MainAudioMixer 에셋 연결
 
-    [Header("--- References ---")]
-    [SerializeField] private AudioSource bgmSource;
-    [SerializeField] private List<AudioSource> sfxSources;
+    const string MASTER_PARAM = "MasterVolume";  // Mixer exposed 이름
 
-    private int sfxIndex = 0;
-
-    private void Awake()
+    void Awake()
     {
-        if (Instance == null)
+        // 싱글톤 유지
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
-
-
-            // 저장된 볼륨 불러오기 (없으면 기본값 1)
-            LoadVolumeSettings();
+            Destroy(gameObject);
+            return;
         }
-        else
-        {
-           
-        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
+    // 0~1 → dB 변환 함수 (AudioMixer를 위해 필요)
+    float ToDecibel(float value)
     {
-        UpdateAllVolumes();
+        if (value <= 0.0001f)
+            return -80f; // 거의 무음
+
+        return Mathf.Log10(value) * 20f;
     }
 
-    // --- 재생 기능 (기존과 동일) ---
-    public void PlayBGM(AudioClip clip)
+    public void SetMasterVolume(float value)
     {
-        if (bgmSource.clip == clip) return;
-        bgmSource.clip = clip;
-        bgmSource.loop = true;
-        bgmSource.Play();
-    }
-
-    public void PlaySFX(AudioClip clip)
-    {
-        if (clip == null) return;
-        AudioSource source = sfxSources[sfxIndex];
-        source.clip = clip;
-        source.volume = masterVolume * sfxVolume;
-        source.Play();
-        sfxIndex = (sfxIndex + 1) % sfxSources.Count;
-    }
-
-    // --- 볼륨 조절 및 저장 기능 ---
-
-    public void SetMasterVolume(float volume)
-    {
-        masterVolume = volume;
-        UpdateAllVolumes();
-        PlayerPrefs.SetFloat("MasterVol", masterVolume); // 값 저장
-    }
-
-    public void SetBGMVolume(float volume)
-    {
-        bgmVolume = volume;
-        UpdateAllVolumes();
-        PlayerPrefs.SetFloat("BGMVol", bgmVolume); // 값 저장
-    }
-
-    public void SetSFXVolume(float volume)
-    {
-        sfxVolume = volume;
-        UpdateAllVolumes();
-        PlayerPrefs.SetFloat("SFXVol", sfxVolume); // 값 저장
-    }
-
-    private void UpdateAllVolumes()
-    {
-        if (bgmSource != null) bgmSource.volume = masterVolume * bgmVolume;
-        foreach (var source in sfxSources) source.volume = masterVolume * sfxVolume;
-    }
-
-    private void LoadVolumeSettings()
-    {
-        masterVolume = PlayerPrefs.GetFloat("MasterVol", 1f);
-        bgmVolume = PlayerPrefs.GetFloat("BGMVol", 1f);
-        sfxVolume = PlayerPrefs.GetFloat("SFXVol", 1f);
+        mainMixer.SetFloat(MASTER_PARAM, ToDecibel(value));
     }
 }
