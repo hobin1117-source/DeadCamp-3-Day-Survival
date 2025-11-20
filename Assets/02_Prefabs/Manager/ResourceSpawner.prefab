@@ -525,7 +525,7 @@ MonoBehaviour:
   - {fileID: 9171643759243837470, guid: 880c60166ceaade43a7559e8b9d9734e, type: 3}
   - {fileID: 8274020690953598801, guid: 6c556e106afa0a14da4a8b5ca619ac71, type: 3}
   initialSize: 20
-  spawnDleay: 2
+  spawnDleay: 60
 --- !u!1 &7778054303190953247
 GameObject:
   m_ObjectHideFlags: 0
