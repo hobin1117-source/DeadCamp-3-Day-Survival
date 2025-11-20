@@ -538,6 +538,7 @@ MonoBehaviour:
   daySky: {fileID: 8900000, guid: 84ea38d7dfc45ea40a4c3d83acfd7752, type: 3}
   sunset: {fileID: 8900000, guid: d179e65e9b0f8594f9f077e33cee486d, type: 3}
   blendSharpness: 1
+  rotationSpeed: 1
 --- !u!1 &236767973
 GameObject:
   m_ObjectHideFlags: 0
@@ -2447,10 +2448,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1100158963122785601, guid: ed4b0534bb3a20a438c6c0799935e482, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 15871
-      objectReference: {fileID: 0}
     - target: {fileID: 2254727855610972189, guid: ed4b0534bb3a20a438c6c0799935e482, type: 3}
       propertyPath: m_Name
       value: Player_PSH

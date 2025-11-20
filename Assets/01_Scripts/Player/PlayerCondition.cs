@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 public interface IDamagable
@@ -10,6 +10,9 @@ public interface IDamagable
 public class PlayerCondition : MonoBehaviour, IDamagable
 {
     public UICondition uICondition;
+
+    public GameObject deathEffectPrefab;
+    private bool isLife = true;
 
     Condition health { get { return uICondition.health; } }
     Condition hunger { get { return uICondition.hunger; } }
@@ -38,6 +41,7 @@ public class PlayerCondition : MonoBehaviour, IDamagable
 
         if (health.curValue == 0f)
         {
+            if (isLife)           
             Die();
         }
     }
@@ -57,7 +61,8 @@ public class PlayerCondition : MonoBehaviour, IDamagable
 
     public void Die()
     {
-        Debug.Log("Á×¾ú´Ù.");
+        isLife = false;
+        Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);        
     }
 
     public void TakePhysicalDamage(int damage)

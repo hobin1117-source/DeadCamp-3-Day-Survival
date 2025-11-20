@@ -706,6 +706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uICondition: {fileID: 0}
+  deathEffectPrefab: {fileID: 3525985246446341850, guid: 4aac1107c44331d4892d40c56b0ccc29, type: 3}
   noHungerHealthDecay: 2
   noDrinkHealthDecay: 2
 --- !u!114 &4825434583775732656
