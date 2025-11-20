@@ -535,7 +535,7 @@ MonoBehaviour:
   daySky: {fileID: 8900000, guid: 84ea38d7dfc45ea40a4c3d83acfd7752, type: 3}
   sunset: {fileID: 8900000, guid: d179e65e9b0f8594f9f077e33cee486d, type: 3}
   blendSharpness: 1
-  rotationSpeed: 1
+  rotationSpeed: -1
 --- !u!1001 &122373621
 PrefabInstance:
   m_ObjectHideFlags: 0
