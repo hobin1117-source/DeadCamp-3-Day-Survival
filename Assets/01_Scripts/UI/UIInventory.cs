@@ -27,6 +27,8 @@ public class UIInventory : MonoBehaviour
     public Button dropBtn;
     public Button equipBtn;
     public Button unEquipBtn;
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip eatAppleSFX;
 
     private int curEquipIndex;
 
@@ -226,7 +228,10 @@ public class UIInventory : MonoBehaviour
                     case ConsumableType.Health:
                         condition.Heal(selectedItem.item.cosumables[i].value); break;
                     case ConsumableType.Hunger:
-                        condition.Eat(selectedItem.item.cosumables[i].value); break;
+                        condition.Eat(selectedItem.item.cosumables[i].value); 
+                        // 🎧 바로 여기서 "사과 먹는 사운드" 재생하면 됨
+                        PlayEatSound();
+                        break;
                 }
             }
             RemoveSelctedItem();
@@ -334,5 +339,10 @@ public class UIInventory : MonoBehaviour
     public void OnUnEquipButton()
     {
         UnEquip(selectedItemIndex);
+    }
+    private void PlayEatSound()
+    {
+        if (sfxSource != null && eatAppleSFX != null)
+            sfxSource.PlayOneShot(eatAppleSFX);
     }
 }
