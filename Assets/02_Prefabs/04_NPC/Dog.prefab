@@ -5417,7 +5417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionLayers:
     serializedVersion: 2
-    m_Bits: 4160
+    m_Bits: 4096
   soundWaveParticleSystem: {fileID: 6372030401592935252}
   audioMinDistance: 100
   audioMaxDistance: 300
