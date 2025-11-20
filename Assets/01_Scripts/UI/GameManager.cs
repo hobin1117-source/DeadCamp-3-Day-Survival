@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     bool isOpened = false;
     public bool IsSettingOpen => isOpened;
 
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
         // ESC 키 감지
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+
             ToggleSettingWindow();
         }
     }
