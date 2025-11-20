@@ -93,11 +93,12 @@ public class UIInventory : MonoBehaviour
         equipButton.SetActive(false);
         unEquipButton.SetActive(false);
         dropButton.SetActive(false);
-        
     }
 
     public void Toggle()
     {
+        UpdateUI();
+
         if (IsOpen())
         {
             inventoryWindow.SetActive(false);
@@ -146,6 +147,8 @@ public class UIInventory : MonoBehaviour
 
     public void UpdateUI()
     {
+        SortInventorySlots();
+
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item != null)
@@ -155,6 +158,30 @@ public class UIInventory : MonoBehaviour
             else
             {
                 slots[i].Clear();
+            }
+        }
+    }
+
+    private void SortInventorySlots()
+    {
+        int nextEmptySlotIndex = 0;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].item != null)
+            {
+                if (i != nextEmptySlotIndex)
+                {
+                    slots[nextEmptySlotIndex].item = slots[i].item;
+                    slots[nextEmptySlotIndex].quantity = slots[i].quantity;
+                    slots[nextEmptySlotIndex].equipped = slots[i].equipped;
+
+                    slots[i].item = null;
+                    slots[i].quantity = 0;
+                    slots[i].equipped = false;
+                }
+
+                nextEmptySlotIndex++;
             }
         }
     }

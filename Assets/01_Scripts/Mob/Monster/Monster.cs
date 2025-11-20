@@ -138,7 +138,9 @@ public class Monster : MonoBehaviour, IDamagable
         }
         return hit.position;
     }
-
+    /*
+    바리게이트 탐색 로직 들어갈 자리
+    */
     void AttackingUpdate()
     {
         if (forceChase) //forceChase가 true인 동안에는 
