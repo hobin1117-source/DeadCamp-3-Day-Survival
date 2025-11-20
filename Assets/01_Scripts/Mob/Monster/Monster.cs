@@ -139,78 +139,72 @@ public class Monster : MonoBehaviour, IDamagable
         return hit.position;
     }
 
-    //바리게이트 찾는 메써드
-    Barricade FindBlockingBarricade()
+    // 플레이어와 나 사이에 있는 바리게이트 하나 찾아오는 메써드 (레이캐스트 기반)
+    Barricade GetBarricadeBetweenMeAndPlayer()
     {
-        Barricade[] barricades = FindObjectsOfType<Barricade>();
+        Transform player = CharacterManager.Instance.Player.transform;
+        Vector3 origin = transform.position + Vector3.up; // 조금 위에서 쏘기
+        Vector3 dir = (player.position - origin).normalized;
+        float maxDist = Vector3.Distance(origin, player.position);
 
-        float minDist = Mathf.Infinity;
-        Barricade target = null;
-
-        foreach (var barri in barricades)
+        RaycastHit hit;
+        if (Physics.Raycast(origin, dir, out hit, maxDist))
         {
-            Vector3 dir = barri.transform.position - transform.position;
-
-            float angle = Vector3.Angle(transform.forward, dir);
-            if (angle > 60f) continue;
-
-            float dist = dir.magnitude; //magnitude는 벡터의 길이를 계산함
-            if (dist > 7f) continue;
-
-            if (dist < minDist)
-            {
-                minDist = dist;
-                target = barri;
-            }
+            return hit.collider.GetComponent<Barricade>();
         }
 
-        return target;
+        return null;
     }
 
     void AttackingUpdate()
     {
+        Transform player = CharacterManager.Instance.Player.transform;
+        Vector3 toPlayer = player.position - transform.position;
+        float distanceToPlayer = toPlayer.magnitude;
 
-        if (forceChase) //forceChase가 true인 동안에는 
-        {
-            agent.isStopped = false; //근접 공격 로직을 제외한 모든 조건을 무시하고
-            agent.SetDestination(CharacterManager.Instance.Player.transform.position); //플레이어를 추격
-            return; //아래 로직 무식
-        }
-
-        if (playerDistance < attackDistance && IsPlayerInFieldOfView())
-        {
-            agent.isStopped = true;
-            if (Time.time - lastAttackTime > attackRate)
-            {
-                lastAttackTime = Time.time;
-                animator.speed = 1;
-                animator.SetTrigger("Attack");
-            }
-        }
-
-        NavMeshPath path = new NavMeshPath();
-        bool hasPath = agent.CalculatePath(CharacterManager.Instance.Player.transform.position, path); //플레이어 경로 계산
-
-        if (hasPath && path.status == NavMeshPathStatus.PathComplete)
+        // 레이드로 소환되는 좀비들은 항상 플레이어 쪽으로 움직이게
+        if (forceChase)
         {
             agent.isStopped = false;
-            agent.SetDestination(CharacterManager.Instance.Player.transform.position);
-            return;
+            agent.SetDestination(player.position);
         }
 
-        //경로가 없으면 바리게이트를 찾음
-        Barricade barricade = FindBlockingBarricade();
-        if (barricade == null)
-            barricade = FindBlockingBarricade();
+        // 1. 플레이어가 사거리 안 + 시야 안 + 사이에 바리게이트 없음 → 플레이어 근접 공격
+        if (distanceToPlayer < attackDistance && IsPlayerInFieldOfView())
+        {
+            Barricade between = GetBarricadeBetweenMeAndPlayer();
+            if (between == null) // 사이에 바리게이트가 없을 때만
+            {
+                agent.isStopped = true;
+                if (Time.time - lastAttackTime > attackRate)
+                {
+                    lastAttackTime = Time.time;
+                    animator.speed = 1;
+                    animator.SetTrigger("Attack");
+                }
+                return;
+            }
+            // 사이에 바리게이트가 있으면 아래 바리게이트 공격 로직으로 넘어감
+        }
+
+        // 2. 플레이어와 나 사이에 바리게이트가 있는지 먼저 확인
+        Barricade barricade = GetBarricadeBetweenMeAndPlayer();
+
         if (barricade != null)
         {
-            agent.isStopped = false;
-            agent.SetDestination(barricade.transform.position);
-
-            float dist = Vector3.Distance(transform.position, barricade.transform.position);
-
-            if (dist <= attackDistance)
+            // 바리게이트 근처 네브메쉬 위치 찾기
+            NavMeshHit navHit;
+            if (NavMesh.SamplePosition(barricade.transform.position, out navHit, 3f, NavMesh.AllAreas))
             {
+                agent.isStopped = false;
+                agent.SetDestination(navHit.position);
+            }
+
+            float distToBarricade = Vector3.Distance(transform.position, barricade.transform.position);
+
+            if (distToBarricade <= attackDistance)
+            {
+                agent.isStopped = true;
                 if (Time.time - lastAttackTime > attackRate)
                 {
                     lastAttackTime = Time.time;
@@ -221,6 +215,18 @@ public class Monster : MonoBehaviour, IDamagable
             return;
         }
 
+        // 3. 바리게이트도 없으면 → 그냥 플레이어 추적
+        NavMeshPath path = new NavMeshPath();
+        bool hasPath = agent.CalculatePath(player.position, path); //플레이어 경로 계산
+
+        if (hasPath && path.status == NavMeshPathStatus.PathComplete)
+        {
+            agent.isStopped = false;
+            agent.SetDestination(player.position);
+            return;
+        }
+
+        // 4. 플레이어, 바리게이트 둘 다 추적/공격 못 할 시 탐색 상태로
         agent.isStopped = true; //바리게이트와 플레이어 추적도 못 할 시 탐색상태로 
         SetState(AIState.Wandering);
     }
@@ -245,7 +251,7 @@ public class Monster : MonoBehaviour, IDamagable
     {
         for (int i = 0; i < dropOnDeath.Length; i++)
         {
-            //드랍 아이템 설정
+            Instantiate(dropOnDeath[i].dropPrefabs, transform.position + Vector3.up * 2, Quaternion.identity);
         }
 
         animator.SetBool("Death", true);

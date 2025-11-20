@@ -523,8 +523,12 @@ MonoBehaviour:
   health: 50
   walkSpeed: 0.5
   runSpeed: 1.8
-  dropOnDeath: []
-  hitVFX: {fileID: 0}
+  dropOnDeath:
+  - {fileID: 11400000, guid: d611b682ef20132489f723675d795eb7, type: 2}
+  - {fileID: 11400000, guid: d611b682ef20132489f723675d795eb7, type: 2}
+  - {fileID: 11400000, guid: d611b682ef20132489f723675d795eb7, type: 2}
+  - {fileID: 11400000, guid: d611b682ef20132489f723675d795eb7, type: 2}
+  - {fileID: 11400000, guid: d611b682ef20132489f723675d795eb7, type: 2}
   detectDistance: 10
   minWanderDistance: 3
   maxWanderDistance: 17
