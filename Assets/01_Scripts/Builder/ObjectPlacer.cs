@@ -142,7 +142,8 @@ public class ObjectPlacer : MonoBehaviour
             return;
 
         Quaternion rotation = Quaternion.Euler(0f, playerCamera.transform.eulerAngles.y, 0f);
-        Instantiate(placeableObjectPrefab, _currentPlacementPosition, rotation);
+        GameObject go = Instantiate(placeableObjectPrefab, _currentPlacementPosition, rotation);
+        go.GetComponent<BoxCollider>().isTrigger = false;
         OnObjectPlaced?.Invoke();
 
         ExitPlacementMode();
