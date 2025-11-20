@@ -9,9 +9,8 @@ public class ZombieRaidSpawn : MonoBehaviour
     public Day day;
     public int dayCount = 0;
 
-    [Header("Raid Zone 설정")]
-    public Collider largeZone; //스폰 가능한 큰 구역
-    public Collider safeZone; //스폰 금지 구역
+    [Header("Raid 스폰 포인트")]
+    public Transform[] spawnPoints;
 
     [Header("Raid 스폰 설정")]
     public RaidWave[] waves;
@@ -53,10 +52,13 @@ public class ZombieRaidSpawn : MonoBehaviour
 
     void SpawnRaidZombie(RaidWave wave)
     {
-        Vector3 pos = GetRandomSpawnPosistion();
+        if (spawnPoints.Length == 0) return;
 
+        Transform sp = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+        // 2) NavMesh 위에서 위치 보정
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(pos, out hit, 2f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(sp.position, out hit, 3f, NavMesh.AllAreas))
         {
             GameObject prefab = GetRandomZombieWeight(wave.monsters);
 
@@ -66,29 +68,15 @@ public class ZombieRaidSpawn : MonoBehaviour
             Monster mon = m.GetComponent<Monster>();
             mon.forceChase = true;
 
-            m.GetComponent<Monster>().OnDeath += () =>
+            mon.OnDeath += () =>
             {
                 currentRaidMonsters--;
             };
         }
     }
 
-    Vector3 GetRandomSpawnPosistion()
-    {
-        Bounds b = largeZone.bounds;
-        Vector3 pos;
 
-        do
-        {
-            pos = new Vector3(Random.Range
-                (b.min.x, b.max.x),
-                b.center.y,
-                Random.Range(b.min.z, b.max.z));
-        }
-        while (safeZone.bounds.Contains(pos));
 
-        return pos;
-    }
 
     GameObject GetRandomZombieWeight(MonsterEntry[] monsters)
     {
