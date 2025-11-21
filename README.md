@@ -3,9 +3,11 @@
 
 ---
 ## 🎮 게임 소개
+
 |게임 시연|
 |:---:|
-|(유튜브 링크가 들어 갈 |
+|  <a href="https://youtu.be/3Bj7AVKGB4s"><img src="https://github.com/user-attachments/assets/e586f597-9b46-44d0-b4c9-674517c0b2c6" width="700"></a> |
+
 - 생존, 디펜스 게임
 - 오전에는 좀비를 피하면서 자원을 파밍
 - 저녁에는 좀비 웨이브로부터 생존
