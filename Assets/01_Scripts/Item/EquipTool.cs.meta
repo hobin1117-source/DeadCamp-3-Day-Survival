@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3e34c402d23d6d84fb0f3427ba048447
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - audioSource: {instanceID: 0}
+  - swingSFX: {fileID: 8300000, guid: 70e2408cf414be54ea971d435b10cb3e, type: 3}
+  - woodHitSFX: {fileID: 8300000, guid: 4a72dc36874073a4db01a3f31c3d9a7c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

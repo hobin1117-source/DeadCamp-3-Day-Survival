@@ -1,7 +1,15 @@
 fileFormatVersion: 2
-guid: 837623e4a349105499acbb6fc0670713
+guid: 3db2c03bab50d67468a040160dc9c5d1
+timeCreated: 1560250850
+licenseType: Store
 DefaultImporter:
-  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 148410
+  packageName: RPG Poly Pack - Lite
+  packageVersion: 1.0
+  assetPath: Assets/RPGPP_LT/Scene/rpgpp_lt_scene_1.0.unity
+  uploadId: 316754

@@ -3,22 +3,24 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Water
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - pick
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Ground
+  - Interactable
+  - Equip
+  - Resource
+  - BuildableLayer
+  - Monster
+  - Barrcade
   - 
   - 
   - 
