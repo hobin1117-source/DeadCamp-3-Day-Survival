@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b80fb8d333a004abc9db4a542ef63d, type: 3}
+  m_Name: PlankBarrier
+  m_EditorClassIdentifier: 
+  displayName: PlankBarrier
+  description: PlankBarrier...
+  type: 3
+  icon: {fileID: 21300000, guid: 4f8777553f2fc804a99a1406151dbe78, type: 3}
+  dropPrefabs: {fileID: 2103344844963152384, guid: b479fae405f6a9c48a24b0c872b4877a, type: 3}
+  canStack: 1
+  maxStackAmout: 12
+  cosumables: []
+  crafts:
+  - requiredItem: {fileID: 11400000, guid: 29b0998e2fd48474e93a2e966193e563, type: 2}
+    value: 1
+  - requiredItem: {fileID: 11400000, guid: fb05571a7b9ad1f45a1521b4aadd2846, type: 2}
+    value: 1
+  equipPrefab: {fileID: 0}
+  itemName: 
+  itemDescription: 
+  itemIcon: {fileID: 0}
